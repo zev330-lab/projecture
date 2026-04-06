@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
+import Container from "@/components/layout/Container";
+import LeadCaptureForm from "@/components/lead/LeadCaptureForm";
 
-/* ─────────────────────────────────────────────
-   Intersection Observer hook for scroll animations
-   ───────────────────────────────────────────── */
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -43,51 +43,29 @@ function Section({
     <section
       id={id}
       ref={ref}
-      className={`opacity-0 px-6 py-24 md:py-32 ${className}`}
+      className={`opacity-0 py-24 md:py-32 ${className}`}
     >
       {children}
     </section>
   );
 }
 
-/* ─────────────────────────────────────────────
-   Page
-   ───────────────────────────────────────────── */
 export default function Home() {
-  const formRef = useRef<HTMLFormElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const form = e.currentTarget;
-      const data = new FormData(form);
-
-      try {
-        await fetch("https://formspree.io/f/xvzbbrpb", {
-          method: "POST",
-          body: data,
-          headers: { Accept: "application/json" },
-        });
-        form.reset();
-        const btn = form.querySelector("button[type=submit]");
-        if (btn) {
-          btn.textContent = "You're In!";
-          setTimeout(() => {
-            btn.textContent = "Get Early Access";
-          }, 3000);
-        }
-      } catch {
-        alert("Something went wrong. Please try again.");
-      }
-    },
-    []
-  );
+  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = e.currentTarget.getAttribute("href");
+    if (href) {
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <main className="overflow-x-hidden">
       {/* ── Hero ── */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center px-6 text-center bg-gradient-to-b from-navy via-navy to-navy-light">
-        <div className="max-w-3xl animate-fade-in-up">
+      <section className="relative flex min-h-screen flex-col items-center justify-center text-center bg-gradient-to-b from-navy via-navy to-navy-light animate-gradient">
+        <div ref={heroRef} className="max-w-3xl px-6 animate-fade-in-up">
           <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-copper">
             Launching in Newton, MA
           </p>
@@ -100,15 +78,23 @@ export default function Home() {
             Projecture shows you what a home could become — with real costs,
             real timelines, and the team to make it happen.
           </p>
-          <a
-            href="#how-it-works"
-            className="mt-10 inline-block rounded-full border border-copper/40 bg-copper/10 px-8 py-3.5 text-sm font-semibold tracking-wide text-copper transition-all hover:bg-copper hover:text-white"
-          >
-            See How It Works
-          </a>
+          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link
+              href="/properties"
+              className="rounded-full bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
+            >
+              Explore Properties
+            </Link>
+            <a
+              href="#how-it-works"
+              onClick={scrollToSection}
+              className="rounded-full border border-copper/40 bg-copper/10 px-8 py-3.5 text-sm font-semibold tracking-wide text-copper transition-all hover:bg-copper hover:text-white"
+            >
+              See How It Works
+            </a>
+          </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-10 flex flex-col items-center gap-2 text-slate/60">
           <span className="text-xs tracking-widest uppercase">Scroll</span>
           <div className="h-8 w-px bg-gradient-to-b from-slate/40 to-transparent" />
@@ -117,32 +103,34 @@ export default function Home() {
 
       {/* ── The Problem ── */}
       <Section id="problem">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
-            94% of buyers want move-in ready.
-            <br />
-            <span className="text-copper">
-              80% of Newton&apos;s homes were built before 1970.
-            </span>
-          </h2>
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-light">
-            Buyers pass over homes they can&apos;t envision renovating. Sellers
-            leave value on the table. Meanwhile, the right renovation could turn
-            an overlooked property into exactly the home someone is searching
-            for.
-          </p>
+        <Container size="md">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
+              94% of buyers want move-in ready.
+              <br />
+              <span className="text-copper">
+                80% of Newton&apos;s homes were built before 1970.
+              </span>
+            </h2>
+            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-slate-light">
+              Buyers pass over homes they can&apos;t envision renovating. Sellers
+              leave value on the table. Meanwhile, the right renovation could turn
+              an overlooked property into exactly the home someone is searching
+              for.
+            </p>
 
-          <div className="stagger-children is-visible mx-auto mt-16 grid max-w-3xl gap-6 md:grid-cols-3">
-            <StatCard label="Median Home Age" value="70+ yrs" />
-            <StatCard label="Median Price" value="$1.6M" />
-            <StatCard label="Inventory" value="Critically Low" />
+            <div className="stagger-children is-visible mx-auto mt-16 grid max-w-3xl gap-6 md:grid-cols-3">
+              <StatCard label="Median Home Age" value="70+ yrs" />
+              <StatCard label="Median Price" value="$1.6M" />
+              <StatCard label="Inventory" value="Critically Low" />
+            </div>
           </div>
-        </div>
+        </Container>
       </Section>
 
       {/* ── How It Works ── */}
       <Section id="how-it-works" className="bg-navy-light/50">
-        <div className="mx-auto max-w-5xl">
+        <Container>
           <h2 className="text-center text-3xl font-bold tracking-tight md:text-5xl">
             How It Works
           </h2>
@@ -168,18 +156,25 @@ export default function Home() {
               desc="One team handles everything. Design, permits, construction, done."
             />
           </div>
-        </div>
+          <div className="mt-10 text-center">
+            <Link
+              href="/how-it-works"
+              className="text-sm font-semibold text-copper transition-colors hover:text-copper-light"
+            >
+              Learn more about our process &rarr;
+            </Link>
+          </div>
+        </Container>
       </Section>
 
       {/* ── Before / After ── */}
       <Section id="transformation">
-        <div className="mx-auto max-w-5xl">
+        <Container>
           <h2 className="mb-16 text-center text-3xl font-bold tracking-tight md:text-5xl">
             The Transformation
           </h2>
 
           <div className="grid gap-0 overflow-hidden rounded-2xl border border-white/5 md:grid-cols-2">
-            {/* Before */}
             <div className="bg-navy-light/60 p-10 md:p-14">
               <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-slate">
                 What You See on the Listing
@@ -205,7 +200,6 @@ export default function Home() {
               </ul>
             </div>
 
-            {/* After */}
             <div className="border-t border-white/5 bg-gradient-to-br from-copper/10 to-navy-light/40 p-10 md:border-l md:border-t-0 md:p-14">
               <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
                 What Projecture Shows You
@@ -232,7 +226,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Bottom stats bar */}
           <div className="mt-6 flex flex-wrap justify-center gap-6 rounded-xl border border-white/5 bg-navy-light/40 px-8 py-6 text-center text-sm md:gap-12 md:text-base">
             <div>
               <span className="font-semibold text-copper">Estimated Renovation</span>
@@ -249,12 +242,12 @@ export default function Home() {
               <span className="ml-2 text-warm-white/70">$2.1M</span>
             </div>
           </div>
-        </div>
+        </Container>
       </Section>
 
       {/* ── Why This Works ── */}
       <Section className="bg-navy-light/50">
-        <div className="mx-auto max-w-5xl">
+        <Container>
           <h2 className="mb-16 text-center text-3xl font-bold tracking-tight md:text-5xl">
             Why This Works
           </h2>
@@ -272,12 +265,12 @@ export default function Home() {
               body="See the numbers before you commit. Customize the scope. Choose your finishes. We build exactly what you want."
             />
           </div>
-        </div>
+        </Container>
       </Section>
 
-      {/* ── Featured Properties (Coming Soon) ── */}
+      {/* ── Featured Properties ── */}
       <Section id="properties">
-        <div className="mx-auto max-w-5xl">
+        <Container>
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
               First Properties Launching Soon
@@ -289,170 +282,84 @@ export default function Home() {
           </div>
 
           <div className="stagger-children is-visible mt-16 grid gap-6 md:grid-cols-3">
-            <PropertyCard
-              neighborhood="Newtonville"
-              type="1955 Colonial"
-            />
-            <PropertyCard
-              neighborhood="West Newton Hill"
-              type="1962 Split-Level"
-            />
-            <PropertyCard
-              neighborhood="Waban"
-              type="1948 Cape"
-            />
+            <ComingSoonCard neighborhood="Newtonville" type="1955 Colonial" />
+            <ComingSoonCard neighborhood="West Newton Hill" type="1962 Split-Level" />
+            <ComingSoonCard neighborhood="Waban" type="1948 Cape" />
           </div>
-        </div>
+
+          <div className="mt-10 text-center">
+            <Link
+              href="/properties"
+              className="rounded-full bg-copper/10 border border-copper/40 px-8 py-3.5 text-sm font-semibold tracking-wide text-copper transition-all hover:bg-copper hover:text-white"
+            >
+              View All Properties
+            </Link>
+          </div>
+        </Container>
       </Section>
 
       {/* ── Partners ── */}
       <Section className="bg-navy-light/50">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
-            A Joint Venture
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Steinmetz Real Estate &times; Bay State Remodeling
-          </h2>
+        <Container size="md">
+          <div className="text-center">
+            <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
+              A Joint Venture
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+              Steinmetz Real Estate &times; Bay State Remodeling
+            </h2>
 
-          <div className="mt-14 grid gap-10 md:grid-cols-2">
-            <div className="rounded-xl border border-white/5 bg-navy/60 p-10 text-left">
-              <h3 className="text-xl font-bold">Steinmetz Real Estate</h3>
-              <p className="mt-1 text-sm text-copper">William Raveis</p>
-              <p className="mt-4 leading-relaxed text-slate-light">
-                26+ years, $590M+ in career sales. Newton market specialists who
-                understand every neighborhood, every street, every opportunity.
-              </p>
-            </div>
-            <div className="rounded-xl border border-white/5 bg-navy/60 p-10 text-left">
-              <h3 className="text-xl font-bold">Bay State Remodeling</h3>
-              <p className="mt-1 text-sm text-copper">
-                Licensed Design-Build Contractor
-              </p>
-              <p className="mt-4 leading-relaxed text-slate-light">
-                18+ years, 170+ Google reviews. Full-service renovation from
-                design through construction — kitchens, baths, additions, and
-                whole-home transformations.
-              </p>
+            <div className="mt-14 grid gap-10 md:grid-cols-2">
+              <div className="rounded-xl border border-white/5 bg-navy/60 p-10 text-left">
+                <h3 className="text-xl font-bold">Steinmetz Real Estate</h3>
+                <p className="mt-1 text-sm text-copper">William Raveis</p>
+                <p className="mt-4 leading-relaxed text-slate-light">
+                  26+ years, $590M+ in career sales. Newton market specialists who
+                  understand every neighborhood, every street, every opportunity.
+                </p>
+              </div>
+              <div className="rounded-xl border border-white/5 bg-navy/60 p-10 text-left">
+                <h3 className="text-xl font-bold">Bay State Remodeling</h3>
+                <p className="mt-1 text-sm text-copper">
+                  Licensed Design-Build Contractor
+                </p>
+                <p className="mt-4 leading-relaxed text-slate-light">
+                  18+ years, 170+ Google reviews. Full-service renovation from
+                  design through construction — kitchens, baths, additions, and
+                  whole-home transformations.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+        </Container>
       </Section>
 
       {/* ── Lead Capture ── */}
       <Section id="early-access">
-        <div className="mx-auto max-w-xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
-            Be First to See the Future
-          </h2>
-          <p className="mt-4 text-slate-light">
-            Launching Spring 2026 in Newton, MA.
-          </p>
+        <Container size="sm">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
+              Be First to See the Future
+            </h2>
+            <p className="mt-4 text-slate-light">
+              Launching Spring 2026 in Newton, MA.
+            </p>
+          </div>
 
-          <form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            className="mt-12 space-y-4 text-left"
-          >
-            <div>
-              <label
-                htmlFor="name"
-                className="mb-1.5 block text-sm font-medium text-slate-light"
-              >
-                First Name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                className="w-full rounded-lg border border-white/10 bg-navy-light/60 px-4 py-3 text-warm-white placeholder:text-slate/50 focus:border-copper/60 focus:outline-none focus:ring-1 focus:ring-copper/40"
-                placeholder="First name"
-              />
-            </div>
+          <div className="mt-12">
+            <LeadCaptureForm source="homepage" />
+          </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-1.5 block text-sm font-medium text-slate-light"
-              >
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="w-full rounded-lg border border-white/10 bg-navy-light/60 px-4 py-3 text-warm-white placeholder:text-slate/50 focus:border-copper/60 focus:outline-none focus:ring-1 focus:ring-copper/40"
-                placeholder="you@example.com"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="interest"
-                className="mb-1.5 block text-sm font-medium text-slate-light"
-              >
-                I&apos;m interested in
-              </label>
-              <select
-                id="interest"
-                name="interest"
-                required
-                className="w-full rounded-lg border border-white/10 bg-navy-light/60 px-4 py-3 text-warm-white focus:border-copper/60 focus:outline-none focus:ring-1 focus:ring-copper/40"
-              >
-                <option value="">Select one</option>
-                <option value="buying">Buying</option>
-                <option value="selling">Selling</option>
-                <option value="both">Both</option>
-                <option value="curious">Just Curious</option>
-              </select>
-            </div>
-
-            <button
-              type="submit"
-              className="mt-4 w-full rounded-full bg-copper py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
-            >
-              Get Early Access
-            </button>
-          </form>
-
-          <p className="mt-8 text-sm text-slate">
+          <p className="mt-8 text-center text-sm text-slate">
             Expanding to Brookline, Wellesley, Lexington, Cambridge, and Weston.
           </p>
-        </div>
+        </Container>
       </Section>
-
-      {/* ── Footer ── */}
-      <footer className="border-t border-white/5 px-6 py-12">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 text-center text-sm text-slate">
-          <p className="text-lg font-bold tracking-tight text-warm-white">
-            Projecture
-          </p>
-          <p>A Steinmetz Real Estate &times; Bay State Remodeling venture</p>
-          <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-warm-white">
-              Privacy Policy
-            </a>
-            <a href="#" className="transition-colors hover:text-warm-white">
-              Terms
-            </a>
-            <a
-              href="mailto:info@projecture.com"
-              className="transition-colors hover:text-warm-white"
-            >
-              info@projecture.com
-            </a>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
 
-/* ─────────────────────────────────────────────
-   Sub-components
-   ───────────────────────────────────────────── */
+/* ── Sub-components ── */
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
@@ -463,20 +370,10 @@ function StatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-function StepCard({
-  num,
-  title,
-  desc,
-}: {
-  num: string;
-  title: string;
-  desc: string;
-}) {
+function StepCard({ num, title, desc }: { num: string; title: string; desc: string }) {
   return (
     <div className="rounded-xl border border-white/5 bg-navy/60 p-8">
-      <span className="text-xs font-bold tracking-widest text-copper/60">
-        {num}
-      </span>
+      <span className="text-xs font-bold tracking-widest text-copper/60">{num}</span>
       <h3 className="mt-3 text-xl font-bold">{title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-slate-light">{desc}</p>
     </div>
@@ -492,13 +389,7 @@ function ValueCard({ title, body }: { title: string; body: string }) {
   );
 }
 
-function PropertyCard({
-  neighborhood,
-  type,
-}: {
-  neighborhood: string;
-  type: string;
-}) {
+function ComingSoonCard({ neighborhood, type }: { neighborhood: string; type: string }) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-white/5 bg-navy-light/40 p-10">
       <span className="absolute right-4 top-4 rounded-full bg-copper/15 px-3 py-1 text-xs font-semibold text-copper">
