@@ -1,16 +1,9 @@
 {
-  "crons": [
-    {
-      "path": "/api/cron/property-scout",
-      "schedule": "0 12 * * 1"
-    },
-    {
-      "path": "/api/cron/buyer-matchmaker",
-      "schedule": "0 13 * * *"
-    },
-    {
-      "path": "/api/cron/market-intelligence",
-      "schedule": "0 23 * * 0"
-    }
-  ]
+  "_crons_note": "Re-enable crons when site is live and marketing begins",
+  "_crons_disabled": [
+    { "path": "/api/cron/property-scout", "schedule": "0 12 * * 1" },
+    { "path": "/api/cron/buyer-matchmaker", "schedule": "0 13 * * *" },
+    { "path": "/api/cron/market-intelligence", "schedule": "0 23 * * 0" }
+  ],
+  "crons": []
 }
