@@ -56,6 +56,28 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    href: "/dashboard/matches",
+    label: "Matches",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <circle cx="6" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="12" cy="6" r="3" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M2 16c0-3 2-5 7-5s7 2 7 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    href: "/dashboard/intelligence",
+    label: "Intelligence",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <circle cx="9" cy="9" r="7.5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="9" cy="9" r="3" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M9 1.5v3M9 13.5v3M1.5 9h3M13.5 9h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+  },
 ];
 
 export default function DashboardNav() {

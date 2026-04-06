@@ -12,7 +12,7 @@ https://projecture.vercel.app
 zev330-lab/projecture
 
 ## Current State
-Phase 4: Complete business model redesign — properties-first homepage, finished-home listings, internal deal pipeline
+Phase 5 (labeled Phase 3 in prompt): AI Agents — 5 Claude-powered agents, API endpoints, cron jobs, full agent dashboard
 
 ## Tech Stack
 Next.js 16, TypeScript, Tailwind CSS v4, Supabase (auth + DB), Vercel
@@ -22,8 +22,8 @@ Set these in .env.local (and Vercel dashboard):
 - `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anon key
 - `SUPABASE_SERVICE_ROLE_KEY` — Supabase service role key (server-side only)
-- `ANTHROPIC_API_KEY` — Claude API key (future)
-- `CRON_SECRET` — Secret for cron job auth (future)
+- `ANTHROPIC_API_KEY` — Claude API key (required for AI agents)
+- `CRON_SECRET` — Secret for cron job auth (required for Vercel cron)
 - `RESEND_API_KEY` — Resend email service (future)
 
 ## Supabase
@@ -103,14 +103,27 @@ src/
 │   │   ├── properties/page.tsx # Deal pipeline — tabs by status, internal financials
 │   │   ├── leads/page.tsx      # Lead management
 │   │   ├── concepts/page.tsx   # Renovation concept management (internal)
-│   │   └── agents/page.tsx     # AI agent monitoring (future)
+│   │   ├── agents/page.tsx     # AI agent dashboard — run agents, view logs
+│   │   ├── matches/page.tsx    # Buyer-property match grid
+│   │   └── intelligence/page.tsx # Market intelligence — briefs, queries, stats
 │   └── api/
 │       ├── leads/route.ts      # POST leads (Formspree fallback)
 │       ├── properties/route.ts # GET properties with filters
 │       ├── properties/[id]/    # GET single property + concepts
 │       ├── concepts/route.ts   # GET/POST renovation concepts
 │       ├── cost-items/route.ts # GET/POST cost line items
-│       └── dashboard/stats/    # GET dashboard summary
+│       ├── dashboard/stats/    # GET dashboard summary
+│       ├── agents/
+│       │   ├── property-scout/   # POST — run scout
+│       │   ├── deal-analyzer/    # POST — run deal analysis
+│       │   ├── listing-writer/   # POST — generate listing copy
+│       │   ├── buyer-matchmaker/ # POST — match buyers to properties
+│       │   ├── market-intelligence/ # POST — market brief or query
+│       │   └── logs/             # GET — fetch agent activity logs
+│       └── cron/
+│           ├── property-scout/   # GET (cron) — weekly scout
+│           ├── buyer-matchmaker/ # GET (cron) — daily matching
+│           └── market-intelligence/ # GET (cron) — weekly brief
 ├── components/
 │   ├── ui/                     # Button, Card, Input, Badge, Modal, Table
 │   ├── layout/                 # Navbar, Footer, DashboardNav, Container
@@ -119,6 +132,13 @@ src/
 │   └── dashboard/              # StatsCards, RecentLeads, AgentStatus
 ├── lib/
 │   ├── types.ts                # TypeScript interfaces — Property includes finished-home fields
+│   ├── agents/
+│   │   ├── shared.ts           # Claude API client, agent logger, cron auth, timed execution
+│   │   ├── property-scout.ts   # Scores renovation potential across target markets
+│   │   ├── deal-analyzer.ts    # Acquisition + renovation + margin analysis
+│   │   ├── listing-writer.ts   # Generates listing copy, social posts, emails
+│   │   ├── buyer-matchmaker.ts # Matches qualified buyers to properties
+│   │   └── market-intelligence.ts # Market briefs, town stats, ad-hoc queries
 │   ├── data/
 │   │   ├── seed-data.json      # Fallback JSON data (20 properties with all new fields)
 │   │   └── get-data.ts         # Data fetching — filters by property_status for public pages
@@ -172,6 +192,18 @@ intake → sarina_review → zion_review → margin_analysis → approved → pu
 - Component library in src/components/ui/
 
 ## Recent Changes
+- Phase 5 (AI Agents):
+  - 5 Claude-powered agents: Property Scout, Deal Analyzer, Listing Writer, Buyer Matchmaker, Market Intelligence
+  - Shared infrastructure: Claude API client (Anthropic SDK), agent logger, cron auth
+  - 5 API endpoints at /api/agents/[name] + logs endpoint
+  - 3 Vercel cron endpoints at /api/cron/[name] with CRON_SECRET auth
+  - Full agent dashboard at /dashboard/agents with per-agent controls and activity feed
+  - Buyer matches page at /dashboard/matches
+  - Market intelligence page at /dashboard/intelligence with query interface
+  - Updated DashboardNav with Matches and Intelligence links
+  - vercel.json with cron schedules (Mon scout, daily matching, Sun brief)
+  - Agents degrade gracefully: work without ANTHROPIC_API_KEY using algorithmic fallbacks
+  - All agents log to agent_logs table in Supabase
 - Phase 4: Complete business model redesign
   - Changed from renovation cost calculator to finished-home listings platform
   - Buyer sees finished_price (all-in), timeline, finished specs, what's included
@@ -193,9 +225,10 @@ intake → sarina_review → zion_review → margin_analysis → approved → pu
 - Supabase env vars must be set in Vercel dashboard for production
 
 ## What's Next
-Phase 5: AI Agents & Visualization
-- Property Scout agent (scans public records for acquisition candidates)
-- Visualization Engine (AI-generated renders of finished homes)
-- Market Analyzer (ARV calculations, comp analysis)
-- Agent monitoring in dashboard
-- Real photography / AI renders to replace gradient placeholders
+Phase 6: Buyer Experience & Visualization
+- Buyer portal (login, saved properties, match notifications)
+- AI-generated property renders / visualization engine
+- Appointment booking for property previews
+- Multi-town property seeding (expand beyond Newton)
+- Real photography to replace gradient placeholders
+- Email notifications for buyer matches (Resend integration)
