@@ -18,9 +18,9 @@ export default function Navbar() {
   if (pathname.startsWith("/dashboard") || pathname === "/login") return null;
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b border-white/5 bg-navy/80 backdrop-blur-xl">
+    <nav className="fixed top-0 z-50 w-full border-b border-stone/10 bg-cream/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="text-xl font-bold tracking-tight text-warm-white">
+        <Link href="/" className="text-xl font-bold tracking-tight text-navy font-[family-name:var(--font-heading)]">
           Projecture
         </Link>
 
@@ -33,7 +33,7 @@ export default function Navbar() {
               className={`text-sm transition-colors ${
                 pathname === link.href
                   ? "font-semibold text-copper"
-                  : "text-slate-light hover:text-warm-white"
+                  : "text-stone-light hover:text-navy"
               }`}
             >
               {link.label}
@@ -41,7 +41,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact"
-            className="rounded-full bg-copper/10 border border-copper/40 px-5 py-2 text-sm font-semibold text-copper transition-all hover:bg-copper hover:text-white"
+            className="rounded-md bg-navy px-7 py-3 text-sm font-semibold text-cream transition-colors hover:bg-navy-light"
           >
             Get Started
           </Link>
@@ -50,7 +50,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="text-warm-white md:hidden"
+          className="text-navy md:hidden"
           aria-label="Toggle menu"
         >
           {mobileOpen ? (
@@ -67,7 +67,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-t border-white/5 bg-navy/95 px-6 py-6 md:hidden">
+        <div className="border-t border-stone/10 bg-cream px-6 py-6 md:hidden">
           <div className="flex flex-col gap-4">
             {links.map((link) => (
               <Link
@@ -77,7 +77,7 @@ export default function Navbar() {
                 className={`text-base transition-colors ${
                   pathname === link.href
                     ? "font-semibold text-copper"
-                    : "text-slate-light hover:text-warm-white"
+                    : "text-stone-light hover:text-navy"
                 }`}
               >
                 {link.label}
@@ -86,7 +86,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 rounded-full bg-copper py-3 text-center text-sm font-semibold text-white"
+              className="mt-2 rounded-md bg-navy py-3 text-center text-sm font-semibold text-white"
             >
               Get Started
             </Link>

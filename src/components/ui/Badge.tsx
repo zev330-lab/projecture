@@ -1,11 +1,11 @@
 type Variant = "default" | "copper" | "success" | "warning" | "danger";
 
 const variantClasses: Record<Variant, string> = {
-  default: "bg-white/10 text-slate-light",
-  copper: "bg-copper/15 text-copper",
-  success: "bg-emerald-500/15 text-emerald-400",
-  warning: "bg-amber-500/15 text-amber-400",
-  danger: "bg-red-500/15 text-red-400",
+  default: "bg-stone/10 text-stone-light",
+  copper: "bg-copper/10 text-copper-dark",
+  success: "bg-emerald-50 text-emerald-700",
+  warning: "bg-amber-50 text-amber-700",
+  danger: "bg-red-50 text-red-700",
 };
 
 interface BadgeProps {

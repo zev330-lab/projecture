@@ -37,9 +37,9 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
-        <p className="text-xl font-semibold text-emerald-400">Message Sent</p>
-        <p className="mt-2 text-slate-light">We&apos;ll get back to you within 24 hours.</p>
+      <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-8 text-center">
+        <p className="text-xl font-semibold text-emerald-800">Message Sent</p>
+        <p className="mt-2 text-stone-light">We&apos;ll get back to you within 24 hours.</p>
       </div>
     );
   }

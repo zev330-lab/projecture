@@ -10,21 +10,21 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div>
         {label && (
-          <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-slate-light">
+          <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-stone">
             {label}
           </label>
         )}
         <input
           ref={ref}
           id={id}
-          className={`w-full rounded-lg border bg-navy-light/60 px-4 py-3 text-warm-white placeholder:text-slate/50 focus:outline-none focus:ring-1 ${
+          className={`w-full rounded-lg border bg-white px-4 py-3 text-navy placeholder:text-stone-lighter focus:outline-none focus:ring-1 ${
             error
-              ? "border-red-500/60 focus:border-red-500/60 focus:ring-red-500/40"
-              : "border-white/10 focus:border-copper/60 focus:ring-copper/40"
+              ? "border-red-400 focus:border-red-400 focus:ring-red-300"
+              : "border-stone/20 focus:border-copper focus:ring-copper/40"
           } ${className}`}
           {...props}
         />
-        {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+        {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
       </div>
     );
   }
@@ -50,18 +50,18 @@ export function Select({
   return (
     <div>
       {label && (
-        <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-slate-light">
+        <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-stone">
           {label}
         </label>
       )}
       <select
         id={id}
-        className={`w-full rounded-lg border border-white/10 bg-navy-light/60 px-4 py-3 text-warm-white focus:border-copper/60 focus:outline-none focus:ring-1 focus:ring-copper/40 ${className}`}
+        className={`w-full rounded-lg border border-stone/20 bg-white px-4 py-3 text-navy focus:border-copper focus:outline-none focus:ring-1 focus:ring-copper/40 ${className}`}
         {...props}
       >
         {children}
       </select>
-      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );
 }
@@ -81,16 +81,16 @@ export function Textarea({
   return (
     <div>
       {label && (
-        <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-slate-light">
+        <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-stone">
           {label}
         </label>
       )}
       <textarea
         id={id}
-        className={`w-full rounded-lg border border-white/10 bg-navy-light/60 px-4 py-3 text-warm-white placeholder:text-slate/50 focus:border-copper/60 focus:outline-none focus:ring-1 focus:ring-copper/40 ${className}`}
+        className={`w-full rounded-lg border border-stone/20 bg-white px-4 py-3 text-navy placeholder:text-stone-lighter focus:border-copper focus:outline-none focus:ring-1 focus:ring-copper/40 ${className}`}
         {...props}
       />
-      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );
 }

@@ -13,7 +13,7 @@ export function Table({ children, className = "" }: TableProps) {
 
 export function TableHead({ children }: { children: React.ReactNode }) {
   return (
-    <thead className="border-b border-white/5 bg-navy-light/80 text-xs uppercase tracking-wider text-slate">
+    <thead className="border-b border-white/5 bg-navy-light/80 text-xs uppercase tracking-wider text-slate-400">
       {children}
     </thead>
   );

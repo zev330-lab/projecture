@@ -81,16 +81,16 @@ export default function HowItWorksPage() {
   return (
     <main className="pt-24">
       {/* Hero */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-cream-dark">
         <Container size="md">
           <div className="text-center">
             <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-copper">
               Our Process
             </p>
-            <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-navy">
               From Listing to Living
             </h1>
-            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-light">
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-light">
               We show you what it could be. Then we build it. Here&apos;s exactly how the process works.
             </p>
           </div>
@@ -98,29 +98,29 @@ export default function HowItWorksPage() {
       </section>
 
       {/* Steps */}
-      <section className="pb-24">
+      <section className="py-20">
         <Container>
           <div className="space-y-16">
             {steps.map((step, i) => (
               <div
                 key={step.num}
-                className={`grid gap-10 rounded-2xl border border-white/5 p-8 md:grid-cols-2 md:p-12 ${
-                  i % 2 === 0 ? "bg-navy-light/40" : "bg-navy-light/20"
+                className={`grid gap-10 rounded-2xl border border-stone/10 p-8 md:grid-cols-2 md:p-12 shadow-sm ${
+                  i % 2 === 0 ? "bg-white" : "bg-cream-dark"
                 }`}
               >
                 <div>
                   <span className="text-xs font-bold tracking-widest text-copper/60">{step.num}</span>
-                  <h2 className="mt-3 text-2xl font-bold md:text-3xl">{step.title}</h2>
-                  <p className="mt-4 leading-relaxed text-slate-light">{step.description}</p>
+                  <h2 className="mt-3 text-2xl font-bold md:text-3xl text-navy">{step.title}</h2>
+                  <p className="mt-4 leading-relaxed text-stone-light">{step.description}</p>
                 </div>
                 <div className="space-y-6">
-                  <div className="rounded-xl border border-white/5 bg-navy/60 p-6">
+                  <div className="rounded-xl border border-stone/10 bg-white p-6">
                     <p className="text-xs font-semibold uppercase tracking-wider text-copper">What You Experience</p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-light">{step.buyer}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-stone-light">{step.buyer}</p>
                   </div>
-                  <div className="rounded-xl border border-white/5 bg-navy/60 p-6">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-slate">Timeline</p>
-                    <p className="mt-2 text-sm text-slate-light">{step.timeline}</p>
+                  <div className="rounded-xl border border-stone/10 bg-white p-6">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-stone-lighter">Timeline</p>
+                    <p className="mt-2 text-sm text-stone">{step.timeline}</p>
                   </div>
                 </div>
               </div>
@@ -130,19 +130,19 @@ export default function HowItWorksPage() {
       </section>
 
       {/* FAQ */}
-      <section className="border-t border-white/5 bg-navy-light/30 py-24">
+      <section className="bg-cream-dark py-20">
         <Container size="md">
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
+          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl text-navy">
             Frequently Asked Questions
           </h2>
           <div className="space-y-6">
             {faqs.map((faq) => (
               <div
                 key={faq.q}
-                className="rounded-xl border border-white/5 bg-navy/60 p-6"
+                className="rounded-xl border border-stone/10 bg-white p-6 shadow-sm"
               >
-                <h3 className="font-semibold text-warm-white">{faq.q}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-slate-light">{faq.a}</p>
+                <h3 className="font-semibold text-navy">{faq.q}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-stone-light">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -150,25 +150,25 @@ export default function HowItWorksPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24">
+      <section className="py-20">
         <Container size="sm">
           <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-navy">
               Ready to See What&apos;s Possible?
             </h2>
-            <p className="mt-4 text-slate-light">
+            <p className="mt-4 text-stone-light">
               Join our early access list and be the first to browse properties with renovation potential.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/properties"
-                className="rounded-full bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
+                className="rounded-md bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
               >
                 Explore Properties
               </Link>
               <Link
                 href="/contact"
-                className="rounded-full border border-copper/40 bg-copper/10 px-8 py-3.5 text-sm font-semibold tracking-wide text-copper transition-all hover:bg-copper hover:text-white"
+                className="rounded-md border border-stone/20 px-8 py-3.5 text-sm font-semibold tracking-wide text-stone transition-all hover:bg-stone/5"
               >
                 Get in Touch
               </Link>

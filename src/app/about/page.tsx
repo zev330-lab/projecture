@@ -59,18 +59,18 @@ export default function AboutPage() {
   return (
     <main className="pt-24">
       {/* Hero */}
-      <section className="py-16 md:py-24">
+      <section className="py-16 md:py-24 bg-cream-dark">
         <Container size="md">
           <div className="text-center">
             <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-copper">
               About Projecture
             </p>
-            <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-navy">
               Changing How People
               <br />
               Buy Homes
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-light">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-stone-light">
               Projecture was born from a simple observation: the best home for a buyer often isn&apos;t the one that looks perfect today — it&apos;s the one with the right bones, the right lot, and the right potential. We help buyers see that potential.
             </p>
           </div>
@@ -78,24 +78,24 @@ export default function AboutPage() {
       </section>
 
       {/* Why */}
-      <section className="border-t border-white/5 bg-navy-light/30 py-20">
+      <section className="py-20">
         <Container>
           <div className="grid gap-12 md:grid-cols-2">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">The Problem We Solve</h2>
-              <p className="mt-6 leading-relaxed text-slate-light">
+              <h2 className="text-3xl font-bold tracking-tight text-navy">The Problem We Solve</h2>
+              <p className="mt-6 leading-relaxed text-stone-light">
                 In markets like Newton, 80% of homes were built before 1970. Most buyers want move-in ready, but move-in ready inventory is scarce and expensive. Meanwhile, properties with enormous potential sit overlooked because buyers can&apos;t envision the transformation.
               </p>
-              <p className="mt-4 leading-relaxed text-slate-light">
+              <p className="mt-4 leading-relaxed text-stone-light">
                 The renovation gap is real: buyers don&apos;t know what&apos;s possible, what it costs, or who they can trust to do the work. Projecture closes that gap with data, visualization, and an integrated team.
               </p>
             </div>
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Our Vision</h2>
-              <p className="mt-6 leading-relaxed text-slate-light">
+              <h2 className="text-3xl font-bold tracking-tight text-navy">Our Vision</h2>
+              <p className="mt-6 leading-relaxed text-stone-light">
                 We believe every property has a story about what it could become. Projecture tells that story with AI-generated visualizations, accurate cost data from 18 years of local project history, and a team that can execute the vision from search to move-in.
               </p>
-              <p className="mt-4 leading-relaxed text-slate-light">
+              <p className="mt-4 leading-relaxed text-stone-light">
                 We&apos;re starting in Newton, MA — but the model works in any market where housing stock needs updating and buyers need help seeing possibility.
               </p>
             </div>
@@ -104,27 +104,27 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-20">
+      <section className="bg-cream-dark py-20">
         <Container>
           <div className="text-center">
             <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
               The Team
             </p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-navy">
               Built by People Who Know the Market
             </h2>
           </div>
 
           <div className="mt-14 grid gap-8 md:grid-cols-3">
             {team.map((person) => (
-              <div key={person.name} className="rounded-xl border border-white/5 bg-navy-light/40 p-8">
+              <div key={person.name} className="rounded-xl border border-stone/10 bg-white p-8 shadow-sm">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-copper/10 text-copper">
                   <span className="text-xl font-bold">{person.name.split(" ").map(n => n[0]).join("")}</span>
                 </div>
-                <h3 className="text-lg font-bold">{person.name}</h3>
+                <h3 className="text-lg font-bold text-navy">{person.name}</h3>
                 <p className="text-sm font-medium text-copper">{person.role}</p>
-                <p className="mt-1 text-xs text-slate">{person.firm}</p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-light">{person.bio}</p>
+                <p className="mt-1 text-xs text-stone-lighter">{person.firm}</p>
+                <p className="mt-4 text-sm leading-relaxed text-stone-light">{person.bio}</p>
               </div>
             ))}
           </div>
@@ -132,31 +132,31 @@ export default function AboutPage() {
       </section>
 
       {/* Credentials */}
-      <section className="border-t border-white/5 bg-navy-light/30 py-20">
+      <section className="py-20">
         <Container>
           <div className="text-center">
             <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
               A Joint Venture
             </p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-navy">
               Two Industry Leaders. One Seamless Experience.
             </h2>
           </div>
 
           <div className="mt-14 space-y-8">
             {credentials.map((cred) => (
-              <div key={cred.firm} className="rounded-2xl border border-white/5 bg-navy/60 p-8 md:p-10">
+              <div key={cred.firm} className="rounded-2xl border border-stone/10 bg-white p-8 md:p-10 shadow-sm">
                 <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
                   <div className="max-w-xl">
-                    <h3 className="text-2xl font-bold">{cred.firm}</h3>
+                    <h3 className="text-2xl font-bold text-navy">{cred.firm}</h3>
                     <p className="mt-1 text-sm text-copper">{cred.subtitle}</p>
-                    <p className="mt-4 leading-relaxed text-slate-light">{cred.description}</p>
+                    <p className="mt-4 leading-relaxed text-stone-light">{cred.description}</p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     {cred.stats.map((stat) => (
-                      <div key={stat.label} className="rounded-lg border border-white/5 bg-navy-light/60 p-4 text-center">
+                      <div key={stat.label} className="rounded-lg border border-stone/10 bg-cream-dark p-4 text-center">
                         <p className="text-xl font-bold text-copper">{stat.value}</p>
-                        <p className="mt-1 text-xs text-slate">{stat.label}</p>
+                        <p className="mt-1 text-xs text-stone-lighter">{stat.label}</p>
                       </div>
                     ))}
                   </div>
@@ -168,19 +168,19 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20">
+      <section className="bg-cream-dark py-20">
         <Container size="sm">
           <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight">
+            <h2 className="text-3xl font-bold tracking-tight text-navy">
               Let&apos;s Build Something Together
             </h2>
-            <p className="mt-4 text-slate-light">
+            <p className="mt-4 text-stone-light">
               Whether you&apos;re buying, selling, or just curious about what&apos;s possible — we&apos;d love to hear from you.
             </p>
             <div className="mt-8">
               <Link
                 href="/contact"
-                className="inline-block rounded-full bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
+                className="inline-block rounded-md bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
               >
                 Get in Touch
               </Link>

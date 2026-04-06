@@ -44,7 +44,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight">Projecture</h1>
-          <p className="mt-2 text-sm text-slate-light">Sign in to your dashboard</p>
+          <p className="mt-2 text-sm text-stone-light">Sign in to your dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -66,7 +66,7 @@ export default function LoginPage() {
           />
 
           {error && (
-            <p className="text-sm text-red-400">{error}</p>
+            <p className="text-sm text-red-500">{error}</p>
           )}
 
           <Button type="submit" className="w-full" disabled={loading}>
@@ -74,7 +74,7 @@ export default function LoginPage() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-xs text-slate">
+        <p className="mt-6 text-center text-xs text-stone-lighter">
           Admin access only. Contact your administrator for credentials.
         </p>
       </div>

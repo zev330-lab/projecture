@@ -49,19 +49,19 @@ export default function FinancingCalculator({ purchasePrice, renovationBudget }:
   }
 
   return (
-    <div className="rounded-2xl border border-white/5 bg-navy-light/40 p-8">
+    <div className="rounded-2xl border border-stone/10 bg-white p-8 shadow-sm">
       <div className="grid gap-8 md:grid-cols-2">
         {/* Inputs */}
         <div className="space-y-5">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-light">
+            <label className="mb-1.5 block text-sm font-medium text-stone">
               Purchase Price
             </label>
-            <div className="text-lg font-bold text-warm-white">{formatCurrency(purchasePrice)}</div>
+            <div className="text-lg font-bold text-navy">{formatCurrency(purchasePrice)}</div>
           </div>
 
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-light">
+            <label className="mb-1.5 block text-sm font-medium text-stone">
               Renovation Budget
             </label>
             <Input
@@ -74,8 +74,8 @@ export default function FinancingCalculator({ purchasePrice, renovationBudget }:
 
           <div>
             <div className="mb-1.5 flex items-center justify-between text-sm">
-              <label className="font-medium text-slate-light">Down Payment</label>
-              <span className="font-semibold text-warm-white">{downPaymentPct}%</span>
+              <label className="font-medium text-stone">Down Payment</label>
+              <span className="font-semibold text-navy">{downPaymentPct}%</span>
             </div>
             <input
               type="range"
@@ -86,7 +86,7 @@ export default function FinancingCalculator({ purchasePrice, renovationBudget }:
               onChange={(e) => setDownPaymentPct(Number(e.target.value))}
               className="w-full accent-copper"
             />
-            <div className="mt-1 flex justify-between text-xs text-slate">
+            <div className="mt-1 flex justify-between text-xs text-stone-lighter">
               <span>5%</span>
               <span>50%</span>
             </div>
@@ -94,7 +94,7 @@ export default function FinancingCalculator({ purchasePrice, renovationBudget }:
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-light">
+              <label className="mb-1.5 block text-sm font-medium text-stone">
                 Interest Rate (%)
               </label>
               <Input
@@ -107,13 +107,13 @@ export default function FinancingCalculator({ purchasePrice, renovationBudget }:
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-sm font-medium text-slate-light">
+              <label className="mb-1.5 block text-sm font-medium text-stone">
                 Loan Term
               </label>
               <select
                 value={termYears}
                 onChange={(e) => setTermYears(Number(e.target.value))}
-                className="w-full rounded-lg border border-white/10 bg-navy-light/60 px-4 py-3 text-warm-white focus:border-copper/60 focus:outline-none focus:ring-1 focus:ring-copper/40"
+                className="w-full rounded-lg border border-stone/20 bg-white px-4 py-3 text-navy focus:border-copper focus:outline-none focus:ring-1 focus:ring-copper/40"
               >
                 <option value={15}>15 years</option>
                 <option value={20}>20 years</option>
@@ -128,27 +128,27 @@ export default function FinancingCalculator({ purchasePrice, renovationBudget }:
           <p className="text-xs font-semibold uppercase tracking-wider text-copper">
             Estimated Monthly Payment
           </p>
-          <p className="mt-2 text-4xl font-bold text-warm-white md:text-5xl">
+          <p className="mt-2 text-4xl font-bold text-navy md:text-5xl">
             {formatCurrency(monthlyPayment)}
           </p>
-          <p className="mt-1 text-sm text-slate">/month</p>
+          <p className="mt-1 text-sm text-stone-lighter">/month</p>
 
-          <div className="mt-8 space-y-3 border-t border-white/5 pt-6">
+          <div className="mt-8 space-y-3 border-t border-stone/10 pt-6">
             <div className="flex justify-between text-sm">
-              <span className="text-slate-light">Total Property + Renovation</span>
-              <span className="font-medium">{formatCurrency(purchasePrice + renoAmount)}</span>
+              <span className="text-stone-light">Total Property + Renovation</span>
+              <span className="font-medium text-navy">{formatCurrency(purchasePrice + renoAmount)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-light">Down Payment ({downPaymentPct}%)</span>
-              <span className="font-medium">{formatCurrency(downPayment)}</span>
+              <span className="text-stone-light">Down Payment ({downPaymentPct}%)</span>
+              <span className="font-medium text-navy">{formatCurrency(downPayment)}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-light">Loan Amount</span>
+              <span className="text-stone-light">Loan Amount</span>
               <span className="font-semibold text-copper">{formatCurrency(totalLoan)}</span>
             </div>
           </div>
 
-          <p className="mt-6 text-xs text-slate">
+          <p className="mt-6 text-xs text-stone-lighter">
             Estimate only. Does not include taxes, insurance, or PMI. Consult a lender for actual rates.
           </p>
         </div>

@@ -12,11 +12,11 @@ const variantClasses: Record<Variant, string> = {
   primary:
     "bg-copper text-white hover:bg-copper-dark focus:ring-copper/40",
   secondary:
-    "bg-navy-lighter text-warm-white hover:bg-navy-light focus:ring-white/20",
+    "bg-navy text-white hover:bg-navy-light focus:ring-navy/20",
   outline:
-    "border border-copper/40 bg-copper/10 text-copper hover:bg-copper hover:text-white focus:ring-copper/40",
+    "border border-stone/20 text-stone hover:bg-stone/5 focus:ring-stone/20",
   ghost:
-    "text-slate-light hover:text-warm-white hover:bg-white/5 focus:ring-white/20",
+    "text-stone-light hover:text-navy hover:bg-stone/5 focus:ring-stone/20",
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -30,7 +30,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-wide transition-all focus:outline-none focus:ring-2 disabled:opacity-50 disabled:pointer-events-none ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        className={`inline-flex items-center justify-center gap-2 rounded-md font-semibold tracking-wide transition-all focus:outline-none focus:ring-2 disabled:opacity-50 disabled:pointer-events-none ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
         {...props}
       >
         {children}

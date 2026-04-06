@@ -103,7 +103,7 @@ export default function PropertiesClient({
   return (
     <>
       {/* Filter bar */}
-      <section className="sticky top-[73px] z-30 border-y border-white/5 bg-navy/90 backdrop-blur-xl">
+      <section className="sticky top-[73px] z-30 border-y border-stone/10 bg-cream/90 backdrop-blur-xl">
         <Container size="xl">
           <div className="flex flex-wrap items-end gap-3 py-4">
             <div className="min-w-[140px]">
@@ -164,7 +164,7 @@ export default function PropertiesClient({
       <section className="py-10 pb-24">
         <Container size="xl">
           <div className="mb-6 flex items-center justify-between">
-            <p className="text-sm text-slate-light">
+            <p className="text-sm text-stone-light">
               {filtered.length}{" "}
               {filtered.length === 1 ? "property" : "properties"}
               {activeFilters > 0 && (
@@ -175,7 +175,7 @@ export default function PropertiesClient({
                     setPrice("");
                     setBeds("");
                   }}
-                  className="ml-3 text-copper hover:text-copper-light"
+                  className="ml-3 text-copper hover:text-copper-dark"
                 >
                   Clear filters
                 </button>
@@ -190,11 +190,11 @@ export default function PropertiesClient({
               ))}
             </div>
           ) : (
-            <div className="rounded-xl border border-white/5 bg-navy-light/40 p-12 text-center">
-              <p className="text-lg font-semibold text-slate-light">
+            <div className="rounded-xl border border-stone/10 bg-white p-12 text-center shadow-sm">
+              <p className="text-lg font-semibold text-navy">
                 No properties match your filters
               </p>
-              <p className="mt-2 text-sm text-slate">
+              <p className="mt-2 text-sm text-stone-light">
                 Try adjusting your search criteria
               </p>
               <button
@@ -204,7 +204,7 @@ export default function PropertiesClient({
                   setPrice("");
                   setBeds("");
                 }}
-                className="mt-4 text-sm font-semibold text-copper hover:text-copper-light"
+                className="mt-4 text-sm font-semibold text-copper hover:text-copper-dark"
               >
                 Clear all filters
               </button>

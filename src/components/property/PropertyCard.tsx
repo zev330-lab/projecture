@@ -14,13 +14,13 @@ function formatPrice(price: number | null): string {
   }).format(price);
 }
 
-const typeGradients: Record<string, string> = {
-  colonial: "from-amber-900/40 via-navy-lighter to-navy-light",
-  cape: "from-sky-900/40 via-navy-lighter to-navy-light",
-  ranch: "from-emerald-900/40 via-navy-lighter to-navy-light",
-  "split-level": "from-violet-900/40 via-navy-lighter to-navy-light",
-  victorian: "from-rose-900/40 via-navy-lighter to-navy-light",
-  contemporary: "from-cyan-900/40 via-navy-lighter to-navy-light",
+const typeColors: Record<string, string> = {
+  colonial: "from-amber-100 to-stone-100",
+  cape: "from-sky-100 to-stone-100",
+  ranch: "from-emerald-100 to-stone-100",
+  "split-level": "from-violet-100 to-stone-100",
+  victorian: "from-rose-100 to-stone-100",
+  contemporary: "from-cyan-100 to-stone-100",
 };
 
 function scoreColor(score: number): "success" | "warning" | "danger" {
@@ -37,16 +37,16 @@ export default function PropertyCard({
   showCostRange?: { low: number; high: number } | null;
 }) {
   const gradient =
-    typeGradients[property.property_type || ""] || typeGradients.colonial;
+    typeColors[property.property_type || ""] || typeColors.colonial;
 
   return (
     <Link href={`/properties/${property.id}`}>
-      <div className="group relative overflow-hidden rounded-xl border border-white/5 bg-navy-light/40 transition-all hover:border-copper/20 hover:shadow-lg hover:shadow-copper/5">
+      <div className="group relative overflow-hidden rounded-xl border border-stone/10 bg-white shadow-sm transition-all hover:border-copper/30 hover:shadow-md">
         {/* Gradient placeholder */}
         <div
           className={`relative aspect-[4/3] bg-gradient-to-br ${gradient}`}
         >
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate/30">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-lighter/60">
             <svg
               width="40"
               height="40"
@@ -83,8 +83,8 @@ export default function PropertyCard({
 
           {/* Cost range tag */}
           {showCostRange && (
-            <div className="absolute bottom-3 left-3 rounded-full bg-navy/80 px-3 py-1 backdrop-blur-sm">
-              <span className="text-xs font-medium text-copper">
+            <div className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 backdrop-blur-sm shadow-sm">
+              <span className="text-xs font-medium text-copper-dark">
                 Reno: {formatPrice(showCostRange.low)} – {formatPrice(showCostRange.high)}
               </span>
             </div>
@@ -93,28 +93,28 @@ export default function PropertyCard({
 
         {/* Details */}
         <div className="p-5">
-          <p className="text-xs font-semibold tracking-wider uppercase text-slate">
+          <p className="text-xs font-semibold tracking-wider uppercase text-stone-lighter">
             {property.neighborhood || property.city}
           </p>
-          <h3 className="mt-1 text-lg font-bold text-warm-white transition-colors group-hover:text-copper">
+          <h3 className="mt-1 text-lg font-bold text-navy transition-colors group-hover:text-copper">
             {property.address}
           </h3>
           <p className="mt-1 text-xl font-bold text-copper">
             {formatPrice(property.estimated_market_value || property.listing_price)}
           </p>
 
-          <div className="mt-3 flex items-center gap-3 text-sm text-slate-light">
+          <div className="mt-3 flex items-center gap-3 text-sm text-stone-light">
             {property.bedrooms && <span>{property.bedrooms} bed</span>}
             {property.bedrooms && property.bathrooms && (
-              <span className="text-white/10">|</span>
+              <span className="text-stone/20">|</span>
             )}
             {property.bathrooms && <span>{property.bathrooms} bath</span>}
             {property.bathrooms && property.sqft && (
-              <span className="text-white/10">|</span>
+              <span className="text-stone/20">|</span>
             )}
             {property.sqft && <span>{property.sqft.toLocaleString()} sqft</span>}
             {property.sqft && property.year_built && (
-              <span className="text-white/10">|</span>
+              <span className="text-stone/20">|</span>
             )}
             {property.year_built && <span>{property.year_built}</span>}
           </div>
@@ -144,16 +144,16 @@ export default function PropertyCard({
 
 export function PropertyCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-xl border border-white/5 bg-navy-light/40">
-      <div className="aspect-[4/3] animate-pulse bg-navy-lighter" />
+    <div className="overflow-hidden rounded-xl border border-stone/10 bg-white shadow-sm">
+      <div className="aspect-[4/3] animate-pulse bg-cream-dark" />
       <div className="space-y-3 p-5">
-        <div className="h-3 w-20 animate-pulse rounded bg-white/5" />
-        <div className="h-5 w-40 animate-pulse rounded bg-white/5" />
-        <div className="h-6 w-28 animate-pulse rounded bg-white/5" />
+        <div className="h-3 w-20 animate-pulse rounded bg-stone/10" />
+        <div className="h-5 w-40 animate-pulse rounded bg-stone/10" />
+        <div className="h-6 w-28 animate-pulse rounded bg-stone/10" />
         <div className="flex gap-4">
-          <div className="h-4 w-12 animate-pulse rounded bg-white/5" />
-          <div className="h-4 w-12 animate-pulse rounded bg-white/5" />
-          <div className="h-4 w-16 animate-pulse rounded bg-white/5" />
+          <div className="h-4 w-12 animate-pulse rounded bg-stone/10" />
+          <div className="h-4 w-12 animate-pulse rounded bg-stone/10" />
+          <div className="h-4 w-16 animate-pulse rounded bg-stone/10" />
         </div>
       </div>
     </div>

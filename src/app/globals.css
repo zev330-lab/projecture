@@ -1,16 +1,21 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy: #0A1628;
+  --color-cream: #FEFDFB;
+  --color-cream-dark: #F5F0EB;
+  --color-navy: #0D1421;
   --color-navy-light: #132240;
   --color-navy-lighter: #1A2D52;
   --color-warm-white: #F8F6F2;
   --color-copper: #C17F59;
   --color-copper-light: #D4976F;
   --color-copper-dark: #A66B48;
+  --color-stone: #44403C;
+  --color-stone-light: #78716C;
+  --color-stone-lighter: #A8A29E;
   --color-slate: #64748B;
   --color-slate-light: #94A3B8;
-  --font-heading: var(--font-dm-sans);
+  --font-heading: var(--font-playfair);
   --font-sans: var(--font-inter);
 }
 
@@ -19,13 +24,14 @@ html {
 }
 
 body {
-  background: var(--color-navy);
-  color: var(--color-warm-white);
+  background: var(--color-cream);
+  color: var(--color-stone);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), system-ui, sans-serif;
+  font-family: var(--font-heading), Georgia, serif;
+  color: var(--color-navy);
 }
 
 /* Scroll-triggered fade-in animation */
@@ -54,14 +60,3 @@ h1, h2, h3, h4, h5, h6 {
 .stagger-children.is-visible > *:nth-child(4) { animation: fadeInUp 0.6s ease-out 0.3s both; }
 .stagger-children.is-visible > *:nth-child(5) { animation: fadeInUp 0.6s ease-out 0.4s both; }
 .stagger-children.is-visible > *:nth-child(6) { animation: fadeInUp 0.6s ease-out 0.5s both; }
-
-/* Animated gradient for hero */
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradientShift 8s ease-in-out infinite;
-}
