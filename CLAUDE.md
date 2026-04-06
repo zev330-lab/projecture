@@ -3,8 +3,14 @@
 ## What This Is
 Future-state property marketplace. Buyers see what homes could become post-renovation with AI visualization, accurate costs, and turnkey execution. Joint venture between Steinmetz Real Estate and Bay State Remodeling.
 
+## Deployed
+https://projecture.vercel.app
+
+## GitHub
+zev330-lab/projecture
+
 ## Current State
-Phase 0: Project scaffold + landing page
+Phase 0: Project scaffold + landing page (deployed)
 
 ## Tech Stack
 Next.js 16, TypeScript, Tailwind CSS v4, Supabase (planned), Vercel
@@ -20,8 +26,11 @@ None yet — landing page is static
 
 @AGENTS.md
 
+## Lead Capture
+Form submits to Formspree endpoint xvzbbrpb
+
 ## Recent Changes
-- Initial scaffold and landing page
+- Landing page with all 9 sections, DM Sans typography, scroll animations, Formspree lead capture
 
 ## Known Issues
 None yet
