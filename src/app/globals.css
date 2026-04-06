@@ -1,26 +1,51 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: #0A1628;
+  --color-navy-light: #132240;
+  --color-navy-lighter: #1A2D52;
+  --color-warm-white: #F8F6F2;
+  --color-copper: #C17F59;
+  --color-copper-light: #D4976F;
+  --color-copper-dark: #A66B48;
+  --color-slate: #64748B;
+  --color-slate-light: #94A3B8;
+  --font-sans: var(--font-dm-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-navy);
+  color: var(--color-warm-white);
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+/* Scroll-triggered fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out both;
+}
+
+/* Stagger children for sequential fade-in */
+.stagger-children > * {
+  opacity: 0;
+}
+.stagger-children.is-visible > *:nth-child(1) { animation: fadeInUp 0.6s ease-out 0.0s both; }
+.stagger-children.is-visible > *:nth-child(2) { animation: fadeInUp 0.6s ease-out 0.1s both; }
+.stagger-children.is-visible > *:nth-child(3) { animation: fadeInUp 0.6s ease-out 0.2s both; }
+.stagger-children.is-visible > *:nth-child(4) { animation: fadeInUp 0.6s ease-out 0.3s both; }
+.stagger-children.is-visible > *:nth-child(5) { animation: fadeInUp 0.6s ease-out 0.4s both; }
+.stagger-children.is-visible > *:nth-child(6) { animation: fadeInUp 0.6s ease-out 0.5s both; }
