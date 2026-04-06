@@ -4,7 +4,7 @@ import ContactForm from "@/components/lead/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact — Projecture",
-  description: "Get in touch with the Projecture team. Whether you're buying, selling, or just curious.",
+  description: "Get in touch with the Projecture team. Interested in a fully renovated home in Newton? We'd love to hear from you.",
 };
 
 export default function ContactPage() {
@@ -21,7 +21,7 @@ export default function ContactPage() {
               Let&apos;s Talk
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-light">
-              Whether you&apos;re ready to explore properties or just want to learn more about what we do — we&apos;d love to hear from you.
+              Interested in a fully renovated home? Have questions about our process? We&apos;d love to hear from you.
             </p>
           </div>
         </Container>
@@ -40,7 +40,7 @@ export default function ContactPage() {
                   <p className="mt-1 text-sm text-copper">William Raveis</p>
                   <div className="mt-4 space-y-2 text-sm text-stone-light">
                     <p>Sarina &amp; Zev Steinmetz</p>
-                    <a href="tel:6175551234" className="block transition-colors hover:text-navy">
+                    <a href="tel:6172441366" className="block transition-colors hover:text-navy">
                       (617) 244-1366
                     </a>
                     <a href="mailto:sarina@steinmetzrealestate.com" className="block transition-colors hover:text-navy">
@@ -56,7 +56,7 @@ export default function ContactPage() {
                   <p className="mt-1 text-sm text-copper">Licensed Design-Build Contractor</p>
                   <div className="mt-4 space-y-2 text-sm text-stone-light">
                     <p>Zion Steinmetz</p>
-                    <a href="tel:6175551234" className="block transition-colors hover:text-navy">
+                    <a href="tel:6179258925" className="block transition-colors hover:text-navy">
                       (617) 925-8925
                     </a>
                     <a href="mailto:info@baystateremodeling.com" className="block transition-colors hover:text-navy">
@@ -74,7 +74,7 @@ export default function ContactPage() {
                   <a href="mailto:info@projecture.com" className="block transition-colors hover:text-navy">
                     info@projecture.com
                   </a>
-                  <p className="text-xs text-stone-lighter">Newton, MA — Launching Spring 2026</p>
+                  <p className="text-xs text-stone-lighter">Newton, MA</p>
                 </div>
               </div>
 

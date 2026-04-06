@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import PropertyCard from "@/components/property/PropertyCard";
 import LeadCaptureForm from "@/components/lead/LeadCaptureForm";
+import { Select } from "@/components/ui/Input";
 import type { Property } from "@/lib/types";
 
 function useReveal() {
@@ -52,218 +53,155 @@ function Section({
   );
 }
 
+const villages = [
+  "Newton Center",
+  "West Newton",
+  "Waban",
+  "Newton Highlands",
+  "Chestnut Hill",
+  "Newtonville",
+];
+
+const priceRanges = [
+  { value: "", label: "Any Price" },
+  { value: "0-1300000", label: "Under $1.3M" },
+  { value: "1300000-1600000", label: "$1.3M - $1.6M" },
+  { value: "1600000-2000000", label: "$1.6M - $2M" },
+  { value: "2000000-99999999", label: "$2M+" },
+];
+
 export default function HomeClient({
   featuredProperties,
 }: {
   featuredProperties: Property[];
 }) {
+  const [village, setVillage] = useState("");
+  const [price, setPrice] = useState("");
+  const [beds, setBeds] = useState("");
+
+  const filtered = useMemo(() => {
+    let result = [...featuredProperties];
+
+    if (village) {
+      result = result.filter((p) => p.neighborhood === village);
+    }
+    if (price) {
+      const [min, max] = price.split("-").map(Number);
+      result = result.filter((p) => {
+        const val = p.finished_price || 0;
+        return val >= min && val <= max;
+      });
+    }
+    if (beds) {
+      result = result.filter((p) => (p.finished_beds || 0) >= parseInt(beds));
+    }
+
+    return result;
+  }, [featuredProperties, village, price, beds]);
+
   return (
     <main>
-      {/* ── Hero — compact, properties-first ── */}
-      <section className="pt-28 pb-16 md:pt-36 md:pb-20 bg-gradient-to-b from-cream-dark to-cream">
+      {/* Hero — compact, properties visible immediately below */}
+      <section className="pt-28 pb-8 md:pt-36 md:pb-12 bg-gradient-to-b from-cream-dark to-cream">
         <Container size="md">
           <div className="text-center">
-            <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-copper">
-              Launching in Newton, MA
-            </p>
             <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl text-navy">
               See Beyond
               <br />
               the Listing
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-light">
-              Projecture shows you what a home could become — with real costs,
-              real timelines, and the team to make it happen.
+              Fully renovated homes in Newton — designed, built, and delivered by our team.
             </p>
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="/properties"
-                className="rounded-md bg-navy px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-navy-light"
-              >
-                Explore Properties
-              </Link>
-              <Link
-                href="/how-it-works"
-                className="rounded-md border border-stone/20 px-8 py-3.5 text-sm font-semibold tracking-wide text-stone transition-all hover:bg-stone/5"
-              >
-                See How It Works
-              </Link>
+          </div>
+
+          {/* Inline filter bar */}
+          <div className="mt-8 rounded-xl border border-stone/10 bg-white p-4 shadow-sm">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+              <div className="flex-1">
+                <Select value={village} onChange={(e) => setVillage(e.target.value)}>
+                  <option value="">All Villages</option>
+                  {villages.map((v) => (
+                    <option key={v} value={v}>{v}</option>
+                  ))}
+                </Select>
+              </div>
+              <div className="flex-1">
+                <Select value={price} onChange={(e) => setPrice(e.target.value)}>
+                  {priceRanges.map((r) => (
+                    <option key={r.value} value={r.value}>{r.label}</option>
+                  ))}
+                </Select>
+              </div>
+              <div className="flex-1">
+                <Select value={beds} onChange={(e) => setBeds(e.target.value)}>
+                  <option value="">Bedrooms</option>
+                  <option value="3">3+</option>
+                  <option value="4">4+</option>
+                  <option value="5">5+</option>
+                </Select>
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* ── Featured Properties — immediately visible ── */}
-      <section id="properties" className="py-16 md:py-20">
+      {/* Property Grid — immediately visible */}
+      <section id="properties" className="pb-16 md:pb-20">
         <Container>
-          <div className="text-center">
-            <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
-              Featured
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              Properties with Potential
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg text-stone-light">
-              Newton homes with renovation concepts, real cost data, and
-              projected returns.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredProperties.slice(0, 6).map((property) => (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
 
-          <div className="mt-10 text-center">
-            <Link
-              href="/properties"
-              className="rounded-md border border-stone/20 px-8 py-3.5 text-sm font-semibold tracking-wide text-stone transition-all hover:bg-stone/5"
-            >
-              View All Properties
-            </Link>
-          </div>
+          {filtered.length === 0 && (
+            <div className="rounded-xl border border-stone/10 bg-white p-12 text-center shadow-sm">
+              <p className="text-lg font-semibold text-navy">No properties match your filters</p>
+              <p className="mt-2 text-sm text-stone-light">Try adjusting your search criteria</p>
+              <button
+                onClick={() => { setVillage(""); setPrice(""); setBeds(""); }}
+                className="mt-4 text-sm font-semibold text-copper hover:text-copper-dark"
+              >
+                Clear all filters
+              </button>
+            </div>
+          )}
+
+          {filtered.length > 0 && (
+            <div className="mt-10 text-center">
+              <Link
+                href="/properties"
+                className="rounded-md border border-stone/20 px-8 py-3.5 text-sm font-semibold tracking-wide text-stone transition-all hover:bg-stone/5"
+              >
+                View All Properties
+              </Link>
+            </div>
+          )}
         </Container>
       </section>
 
-      {/* ── The Problem ── */}
-      <Section id="problem" className="bg-cream-dark">
-        <Container size="md">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              94% of buyers want move-in ready.
-              <br />
-              <span className="text-copper">
-                80% of Newton&apos;s homes were built before 1970.
-              </span>
-            </h2>
-            <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-stone-light">
-              Buyers pass over homes they can&apos;t envision renovating.
-              Sellers leave value on the table. Meanwhile, the right renovation
-              could turn an overlooked property into exactly the home someone is
-              searching for.
-            </p>
-
-            <div className="stagger-children is-visible mx-auto mt-14 grid max-w-3xl gap-6 md:grid-cols-3">
-              <StatCard label="Median Home Age" value="70+ yrs" />
-              <StatCard label="Median Price" value="$1.6M" />
-              <StatCard label="Inventory" value="Critically Low" />
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Before / After — Side by Side ── */}
-      <Section id="transformation">
-        <Container>
-          <h2 className="mb-12 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            The Transformation
-          </h2>
-
-          <div className="grid gap-0 overflow-hidden rounded-2xl border border-stone/10 shadow-sm md:grid-cols-2">
-            <div className="bg-cream-dark p-10 md:p-14">
-              <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-stone-lighter">
-                What You See on the Listing
-              </p>
-              <h3 className="mb-6 text-2xl font-bold text-navy">1955 Colonial</h3>
-              <ul className="space-y-3 text-stone-light leading-relaxed">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-stone-lighter" />
-                  Dark, closed-off kitchen with original cabinetry
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-stone-lighter" />
-                  Single small bathroom on the second floor
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-stone-lighter" />
-                  Unfinished basement, outdated systems
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-stone-lighter" />
-                  Good bones, great lot — hard to see past the surface
-                </li>
-              </ul>
-            </div>
-
-            <div className="border-t border-stone/10 bg-gradient-to-br from-copper/5 to-cream-dark p-10 md:border-l md:border-t-0 md:p-14">
-              <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
-                What Projecture Shows You
-              </p>
-              <h3 className="mb-6 text-2xl font-bold text-navy">The Reimagined Home</h3>
-              <ul className="space-y-3 text-stone leading-relaxed">
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-copper" />
-                  Open-concept kitchen with custom island and premium finishes
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-copper" />
-                  Primary suite with spa bathroom and walk-in closet
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-copper" />
-                  Finished lower level, all-new mechanicals
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="mt-1.5 block h-1.5 w-1.5 shrink-0 rounded-full bg-copper" />
-                  A home that matches the neighborhood&apos;s best — and your
-                  vision
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-6 rounded-xl border border-stone/10 bg-white px-8 py-6 text-center text-sm shadow-sm md:gap-12 md:text-base">
-            <div>
-              <span className="font-semibold text-copper">
-                Estimated Renovation
-              </span>
-              <span className="ml-2 text-stone-light">
-                $225,000 – $275,000
-              </span>
-            </div>
-            <div className="hidden h-5 w-px bg-stone/10 md:block" />
-            <div>
-              <span className="font-semibold text-copper">Timeline</span>
-              <span className="ml-2 text-stone-light">5 – 6 months</span>
-            </div>
-            <div className="hidden h-5 w-px bg-stone/10 md:block" />
-            <div>
-              <span className="font-semibold text-copper">
-                Projected Value
-              </span>
-              <span className="ml-2 text-stone-light">$2.1M</span>
-            </div>
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── How It Works ── */}
+      {/* How It Works — 3 steps */}
       <Section id="how-it-works" className="bg-cream-dark">
         <Container>
           <h2 className="text-center text-3xl font-bold tracking-tight md:text-4xl">
             How It Works
           </h2>
-          <div className="stagger-children is-visible mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="stagger-children is-visible mt-14 grid gap-8 md:grid-cols-3">
             <StepCard
               num="01"
               title="Browse"
-              desc="Search properties by what they could become, not just what they are today."
+              desc="Explore fully renovated homes before they're built. See the finished product, the price, and the timeline."
             />
             <StepCard
               num="02"
-              title="Visualize"
-              desc="AI-powered renderings show the finished product — your future kitchen, bathroom, living space."
+              title="Reserve"
+              desc="Secure your future home with a commitment. Work with our team to finalize details and finishes."
             />
             <StepCard
               num="03"
-              title="Know the Numbers"
-              desc="Real renovation costs from 18 years of local project data. Not estimates — intelligence."
-            />
-            <StepCard
-              num="04"
-              title="Build It"
-              desc="One team handles everything. Design, permits, construction, done."
+              title="Move In"
+              desc="We handle everything — design, permits, construction. You get the keys to your fully renovated home."
             />
           </div>
           <div className="mt-10 text-center">
@@ -277,31 +215,8 @@ export default function HomeClient({
         </Container>
       </Section>
 
-      {/* ── Why This Works ── */}
+      {/* Partners */}
       <Section>
-        <Container>
-          <h2 className="mb-14 text-center text-3xl font-bold tracking-tight md:text-4xl">
-            Why This Works
-          </h2>
-          <div className="stagger-children is-visible grid gap-8 md:grid-cols-3">
-            <ValueCard
-              title="Real Data"
-              body="Our cost estimates come from 18 years and hundreds of completed renovations in Newton, Brookline, Wellesley, and beyond. Not algorithms — experience."
-            />
-            <ValueCard
-              title="One Team"
-              body="Steinmetz Real Estate finds the property. Bay State Remodeling builds the vision. You get one seamless experience from search to move-in."
-            />
-            <ValueCard
-              title="You're In Control"
-              body="See the numbers before you commit. Customize the scope. Choose your finishes. We build exactly what you want."
-            />
-          </div>
-        </Container>
-      </Section>
-
-      {/* ── Partners ── */}
-      <Section className="bg-cream-dark">
         <Container size="md">
           <div className="text-center">
             <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
@@ -317,8 +232,7 @@ export default function HomeClient({
                 <p className="mt-1 text-sm text-copper">William Raveis</p>
                 <p className="mt-4 leading-relaxed text-stone-light">
                   26+ years, $590M+ in career sales. Newton market specialists
-                  who understand every neighborhood, every street, every
-                  opportunity.
+                  who identify the best opportunities in every neighborhood.
                 </p>
               </div>
               <div className="rounded-xl border border-stone/10 bg-white p-10 text-left shadow-sm">
@@ -328,8 +242,7 @@ export default function HomeClient({
                 </p>
                 <p className="mt-4 leading-relaxed text-stone-light">
                   18+ years, 170+ Google reviews. Full-service renovation from
-                  design through construction — kitchens, baths, additions, and
-                  whole-home transformations.
+                  design through construction — delivering homes to the highest standard.
                 </p>
               </div>
             </div>
@@ -337,15 +250,15 @@ export default function HomeClient({
         </Container>
       </Section>
 
-      {/* ── Lead Capture ── */}
-      <Section id="early-access">
+      {/* Lead Capture */}
+      <Section id="early-access" className="bg-cream-dark">
         <Container size="sm">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              Be First to See the Future
+              Get Notified of New Listings
             </h2>
             <p className="mt-4 text-stone-light">
-              Launching Spring 2026 in Newton, MA.
+              Be the first to see new homes as they become available.
             </p>
           </div>
 
@@ -362,16 +275,7 @@ export default function HomeClient({
   );
 }
 
-/* ── Sub-components ── */
-
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl border border-stone/10 bg-white p-8 text-center shadow-sm">
-      <p className="text-3xl font-bold text-copper">{value}</p>
-      <p className="mt-2 text-sm text-stone-light">{label}</p>
-    </div>
-  );
-}
+/* Sub-components */
 
 function StepCard({
   num,
@@ -389,15 +293,6 @@ function StepCard({
       </span>
       <h3 className="mt-3 text-xl font-bold text-navy">{title}</h3>
       <p className="mt-3 text-sm leading-relaxed text-stone-light">{desc}</p>
-    </div>
-  );
-}
-
-function ValueCard({ title, body }: { title: string; body: string }) {
-  return (
-    <div className="rounded-xl border border-stone/10 bg-white p-10 shadow-sm">
-      <h3 className="text-xl font-bold text-navy">{title}</h3>
-      <p className="mt-4 text-sm leading-relaxed text-stone-light">{body}</p>
     </div>
   );
 }

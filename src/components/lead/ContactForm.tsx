@@ -56,8 +56,8 @@ export default function ContactForm() {
 
       <Select id="interest" name="interest" label="I'm interested in" required>
         <option value="">Select one</option>
-        <option value="buying">Buying a home with renovation potential</option>
-        <option value="selling">Selling my home</option>
+        <option value="buying">Buying a fully renovated home</option>
+        <option value="selling">Selling my home to Projecture</option>
         <option value="both">Both buying and selling</option>
         <option value="curious">Just curious about Projecture</option>
       </Select>

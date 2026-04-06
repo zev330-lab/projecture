@@ -99,14 +99,14 @@ export default function LeadCaptureForm({ source = "website", propertyId, compac
 
       <Select id="interest" name="interest" label="I'm interested in" required>
         <option value="">Select one</option>
-        <option value="buying">Buying</option>
-        <option value="selling">Selling</option>
+        <option value="buying">Buying a renovated home</option>
+        <option value="selling">Selling my home to Projecture</option>
         <option value="both">Both</option>
-        <option value="curious">Just Curious</option>
+        <option value="curious">Just curious</option>
       </Select>
 
       <Button type="submit" className="w-full" disabled={status === "loading"}>
-        {status === "loading" ? "Submitting..." : status === "error" ? "Try Again" : "Get Early Access"}
+        {status === "loading" ? "Submitting..." : status === "error" ? "Try Again" : "Get Notified"}
       </Button>
     </form>
   );

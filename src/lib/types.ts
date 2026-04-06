@@ -16,6 +16,17 @@ export interface Lead {
   updated_at: string;
 }
 
+export type PropertyStatus =
+  | "intake"
+  | "sarina_review"
+  | "zion_review"
+  | "margin_analysis"
+  | "approved"
+  | "published"
+  | "under_contract"
+  | "sold"
+  | "rejected";
+
 export interface Property {
   id: string;
   address: string;
@@ -45,6 +56,22 @@ export interface Property {
   description: string | null;
   renovation_score: number | null;
   featured: boolean;
+  // New fields for finished-home model
+  acquisition_cost: number | null;
+  renovation_cost: number | null;
+  target_margin: number | null;
+  finished_price: number | null;
+  finished_beds: number | null;
+  finished_baths: number | null;
+  finished_sqft: number | null;
+  estimated_ready_date: string | null;
+  property_status: PropertyStatus;
+  teaser_description: string | null;
+  full_description: string | null;
+  included_features: string[] | null;
+  sarina_notes: string | null;
+  zion_notes: string | null;
+  rejection_reason: string | null;
   created_at: string;
   updated_at: string;
 }

@@ -4,16 +4,12 @@ import Link from "next/link";
 import Container from "@/components/layout/Container";
 import Badge from "@/components/ui/Badge";
 import PropertyCard from "@/components/property/PropertyCard";
-import RenovationConcept from "@/components/property/RenovationConcept";
 import LeadCaptureForm from "@/components/lead/LeadCaptureForm";
-import FinancingCalculator from "./FinancingCalculator";
+import MortgageCalculator from "./MortgageCalculator";
 import { getPropertyWithConcepts, getSimilarProperties } from "@/lib/data/get-data";
 
 function formatPrice(price: number | null): string {
   if (!price) return "TBD";
-  if (price >= 1000000) {
-    return `$${(price / 1000000).toFixed(2)}M`;
-  }
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -21,19 +17,44 @@ function formatPrice(price: number | null): string {
   }).format(price);
 }
 
-function scoreColor(score: number): "success" | "warning" | "danger" {
-  if (score >= 80) return "success";
-  if (score >= 50) return "warning";
-  return "danger";
-}
-
-const typeColors: Record<string, string> = {
+const typeGradients: Record<string, string> = {
   colonial: "from-amber-50 to-cream",
-  cape: "from-sky-50 to-cream",
-  ranch: "from-emerald-50 to-cream",
+  cape: "from-emerald-50 to-cream",
+  ranch: "from-sky-50 to-cream",
   "split-level": "from-violet-50 to-cream",
   victorian: "from-rose-50 to-cream",
 };
+
+const statusLabels: Record<string, { label: string; variant: "copper" | "success" | "warning" | "default" }> = {
+  published: { label: "Available", variant: "success" },
+  under_contract: { label: "Under Contract", variant: "warning" },
+  sold: { label: "Sold", variant: "default" },
+};
+
+function getTimelineLabel(date: string | null): string | null {
+  if (!date) return null;
+  const d = new Date(date);
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ];
+  return `${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+const finishedImageLabels = [
+  "Renovated Exterior",
+  "Chef's Kitchen",
+  "Spa Primary Bath",
+  "Open Living Room",
+  "Primary Suite",
+  "Outdoor Living",
+];
+
+const currentImageLabels = [
+  "Current Exterior",
+  "Existing Kitchen",
+  "Current Bath",
+];
 
 export async function generateMetadata({
   params,
@@ -46,7 +67,7 @@ export async function generateMetadata({
 
   return {
     title: `${property.address}, ${property.neighborhood || property.city} — Projecture`,
-    description: `See the renovation potential for ${property.address}. ${property.description || ""}`.slice(0, 160),
+    description: property.teaser_description || `Fully renovated home at ${property.address}. ${formatPrice(property.finished_price)}.`,
   };
 }
 
@@ -61,8 +82,9 @@ export default async function PropertyDetailPage({
   if (!property) notFound();
 
   const similar = await getSimilarProperties(property, 3);
-  const gradient = typeColors[property.property_type || ""] || typeColors.colonial;
-  const primaryConcept = property.renovation_concepts[0] || null;
+  const gradient = typeGradients[property.property_type || ""] || typeGradients.colonial;
+  const status = statusLabels[property.property_status] || statusLabels.published;
+  const timeline = getTimelineLabel(property.estimated_ready_date);
 
   return (
     <main className="pt-24">
@@ -79,300 +101,303 @@ export default async function PropertyDetailPage({
         </Container>
       </section>
 
-      {/* Hero */}
-      <section className={`bg-gradient-to-b ${gradient} py-16`}>
+      {/* Hero — finished home render placeholder */}
+      <section className={`bg-gradient-to-b ${gradient} py-12`}>
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[1fr_380px]">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                {property.renovation_score !== null && (
-                  <Badge variant={scoreColor(property.renovation_score)} className="text-sm px-4 py-1.5">
-                    {property.renovation_score} Renovation Score
-                  </Badge>
-                )}
-                <Badge variant="default" className="capitalize">
-                  {property.property_type || "Residential"}
-                </Badge>
+          <div className="grid gap-8 lg:grid-cols-[1fr_420px]">
+            {/* Main image placeholder */}
+            <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-stone/10 bg-white/60">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-lighter/40">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                  <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                  <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
+                </svg>
+                <span className="mt-2 text-sm font-medium">Rendering Coming Soon</span>
               </div>
 
-              <h1 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl text-navy">
-                {property.address}
-              </h1>
-              <p className="mt-2 text-lg text-stone-light">
-                {property.neighborhood && `${property.neighborhood}, `}
-                {property.city}, {property.state} {property.zip}
+              <div className="absolute left-4 top-4 flex gap-2">
+                <Badge variant={status.variant} className="text-sm px-4 py-1.5">{status.label}</Badge>
+              </div>
+
+              {timeline && (
+                <div className="absolute right-4 top-4">
+                  <span className="inline-flex items-center rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-navy shadow-sm backdrop-blur-sm">
+                    Ready {timeline}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Quick info sidebar */}
+            <div className="flex flex-col gap-4">
+              <div>
+                <p className="text-xs font-semibold tracking-wider uppercase text-stone-lighter">
+                  {property.neighborhood && `${property.neighborhood}, `}{property.city}
+                </p>
+                <h1 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl text-navy">
+                  {property.address}
+                </h1>
+              </div>
+
+              <p className="text-4xl font-bold text-copper">
+                {formatPrice(property.finished_price)}
               </p>
 
-              <p className="mt-5 text-4xl font-bold text-copper">
-                {formatPrice(property.estimated_market_value || property.listing_price)}
-              </p>
-
-              {/* Key stats */}
-              <div className="mt-8 flex flex-wrap gap-8">
-                {property.bedrooms && (
+              {/* Finished specs */}
+              <div className="flex flex-wrap gap-6">
+                {property.finished_beds && (
                   <div>
-                    <span className="text-3xl font-bold text-navy">{property.bedrooms}</span>
-                    <span className="ml-1.5 text-sm text-stone-light">beds</span>
+                    <span className="text-2xl font-bold text-navy">{property.finished_beds}</span>
+                    <span className="ml-1 text-sm text-stone-light">beds</span>
                   </div>
                 )}
-                {property.bathrooms && (
+                {property.finished_baths && (
                   <div>
-                    <span className="text-3xl font-bold text-navy">{property.bathrooms}</span>
-                    <span className="ml-1.5 text-sm text-stone-light">baths</span>
+                    <span className="text-2xl font-bold text-navy">{property.finished_baths}</span>
+                    <span className="ml-1 text-sm text-stone-light">baths</span>
                   </div>
                 )}
-                {property.sqft && (
+                {property.finished_sqft && (
                   <div>
-                    <span className="text-3xl font-bold text-navy">{property.sqft.toLocaleString()}</span>
-                    <span className="ml-1.5 text-sm text-stone-light">sqft</span>
-                  </div>
-                )}
-                {property.year_built && (
-                  <div>
-                    <span className="text-3xl font-bold text-navy">{property.year_built}</span>
-                    <span className="ml-1.5 text-sm text-stone-light">built</span>
+                    <span className="text-2xl font-bold text-navy">{property.finished_sqft.toLocaleString()}</span>
+                    <span className="ml-1 text-sm text-stone-light">sqft</span>
                   </div>
                 )}
                 {property.lot_sqft && (
                   <div>
-                    <span className="text-3xl font-bold text-navy">{(property.lot_sqft / 1000).toFixed(1)}K</span>
-                    <span className="ml-1.5 text-sm text-stone-light">lot sqft</span>
+                    <span className="text-2xl font-bold text-navy">{(property.lot_sqft / 1000).toFixed(1)}K</span>
+                    <span className="ml-1 text-sm text-stone-light">lot sqft</span>
                   </div>
                 )}
               </div>
+
+              <div className="mt-auto rounded-lg border border-stone/10 bg-white p-4">
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <p className="text-xs text-stone-lighter">Property Type</p>
+                    <p className="mt-0.5 font-semibold text-navy capitalize">{property.property_type || "Residential"}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-stone-lighter">Year Built</p>
+                    <p className="mt-0.5 font-semibold text-navy">{property.year_built || "—"}</p>
+                  </div>
+                  {timeline && (
+                    <div>
+                      <p className="text-xs text-stone-lighter">Available</p>
+                      <p className="mt-0.5 font-semibold text-copper">{timeline}</p>
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-xs text-stone-lighter">Neighborhood</p>
+                    <p className="mt-0.5 font-semibold text-navy">{property.neighborhood || property.city}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 1: Your Future Home */}
+      <section className="py-16">
+        <Container>
+          <div className="mb-10">
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-copper">Your Future Home</p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy">
+              The Finished Home
+            </h2>
+          </div>
+
+          {/* Image gallery placeholders */}
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {finishedImageLabels.map((label, i) => (
+              <div
+                key={label}
+                className={`relative overflow-hidden rounded-xl border border-stone/10 ${
+                  i === 0 ? "sm:col-span-2 lg:col-span-2 aspect-[2/1]" : "aspect-[4/3]"
+                }`}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-orange-50/40 to-cream flex flex-col items-center justify-center text-stone-lighter/50">
+                  <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                    <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                    <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                  <span className="mt-2 text-xs font-medium">{label}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Description */}
+          {property.full_description && (
+            <div className="mt-10 max-w-3xl">
+              <p className="text-lg leading-relaxed text-stone-light">
+                {property.full_description}
+              </p>
+            </div>
+          )}
+
+          {/* Finished specs grid */}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {property.finished_beds && (
+              <SpecCard label="Bedrooms" value={String(property.finished_beds)} />
+            )}
+            {property.finished_baths && (
+              <SpecCard label="Bathrooms" value={String(property.finished_baths)} />
+            )}
+            {property.finished_sqft && (
+              <SpecCard label="Finished Sqft" value={property.finished_sqft.toLocaleString()} />
+            )}
+            {property.lot_sqft && (
+              <SpecCard label="Lot Size" value={`${property.lot_sqft.toLocaleString()} sqft`} />
+            )}
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 2: Key Details */}
+      <section className="bg-cream-dark py-16">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div>
+              <h2 className="text-2xl font-bold text-navy">Key Details</h2>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <DetailRow label="Price" value={formatPrice(property.finished_price)} highlight />
+                {timeline && <DetailRow label="Available" value={timeline} highlight />}
+                <DetailRow label="Neighborhood" value={property.neighborhood || property.city} />
+                <DetailRow label="Property Type" value={property.property_type || "Residential"} capitalize />
+                <DetailRow label="Lot Size" value={property.lot_sqft ? `${property.lot_sqft.toLocaleString()} sqft` : "—"} />
+                <DetailRow label="Year Built" value={String(property.year_built || "—")} />
+              </div>
             </div>
 
-            {/* Photo grid placeholder */}
-            <div className="grid grid-cols-2 grid-rows-2 gap-2 rounded-xl overflow-hidden">
-              {[0, 1, 2, 3].map((i) => (
+            {/* Mortgage estimate */}
+            {property.finished_price && (
+              <div>
+                <h2 className="text-2xl font-bold text-navy">Estimate Your Payment</h2>
+                <div className="mt-6">
+                  <MortgageCalculator price={property.finished_price} />
+                </div>
+              </div>
+            )}
+          </div>
+        </Container>
+      </section>
+
+      {/* Section 3: The Property Today */}
+      <section className="py-16">
+        <Container>
+          <div className="mb-8">
+            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-stone-lighter">The Property Today</p>
+            <h2 className="mt-2 text-2xl font-bold text-navy">Current State</h2>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
+            {/* Current images */}
+            <div className="grid grid-cols-3 gap-2">
+              {currentImageLabels.map((label) => (
                 <div
-                  key={i}
-                  className={`bg-cream-dark border border-stone/10 flex items-center justify-center ${i === 0 ? "col-span-2 aspect-[2/1]" : "aspect-square"}`}
+                  key={label}
+                  className="relative aspect-[4/3] overflow-hidden rounded-lg border border-stone/10"
                 >
-                  <div className="text-center text-stone-lighter/40">
-                    <svg width="24" height="24" viewBox="0 0 48 48" fill="none" className="mx-auto">
+                  <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-gray-100 to-stone-100 flex flex-col items-center justify-center text-stone-lighter/40">
+                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
                       <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
                       <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
                     </svg>
+                    <span className="mt-1 text-[10px] font-medium">{label}</span>
                   </div>
                 </div>
               ))}
-              <p className="col-span-2 mt-1 text-center text-xs text-stone-lighter">Photos coming soon</p>
             </div>
-          </div>
-        </Container>
-      </section>
 
-      {/* What You See Today vs What It Could Become — Side by Side */}
-      <section className="py-16">
-        <Container>
-          <div className="grid gap-0 overflow-hidden rounded-2xl border border-stone/10 shadow-sm md:grid-cols-2">
-            {/* Today */}
-            <div className="bg-cream-dark p-10 md:p-12">
-              <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-stone-lighter">
-                What You See Today
+            <div>
+              <p className="leading-relaxed text-stone-light">
+                This {property.year_built} {property.property_type} is currently off-market.
+                Our team will fully renovate this property to deliver the home shown above.
               </p>
-              <h2 className="text-2xl font-bold text-navy">The Current Home</h2>
               {property.description && (
-                <p className="mt-4 leading-relaxed text-stone-light">
+                <p className="mt-4 text-sm leading-relaxed text-stone-lighter">
                   {property.description}
                 </p>
               )}
-
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {property.property_type && (
-                  <DetailCard label="Property Type" value={property.property_type} capitalize />
-                )}
-                {property.year_built && (
-                  <DetailCard label="Year Built" value={String(property.year_built)} />
-                )}
-                {property.lot_sqft && (
-                  <DetailCard label="Lot Size" value={`${property.lot_sqft.toLocaleString()} sqft`} />
-                )}
-                {property.assessed_value && (
-                  <DetailCard label="Assessed Value" value={formatPrice(property.assessed_value)} />
-                )}
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <div className="rounded-lg border border-stone/10 bg-white p-3">
+                  <p className="text-xs text-stone-lighter">Current Beds</p>
+                  <p className="font-semibold text-navy">{property.bedrooms || "—"}</p>
+                </div>
+                <div className="rounded-lg border border-stone/10 bg-white p-3">
+                  <p className="text-xs text-stone-lighter">Current Baths</p>
+                  <p className="font-semibold text-navy">{property.bathrooms || "—"}</p>
+                </div>
+                <div className="rounded-lg border border-stone/10 bg-white p-3">
+                  <p className="text-xs text-stone-lighter">Current Sqft</p>
+                  <p className="font-semibold text-navy">{property.sqft?.toLocaleString() || "—"}</p>
+                </div>
+                <div className="rounded-lg border border-stone/10 bg-white p-3">
+                  <p className="text-xs text-stone-lighter">Year Built</p>
+                  <p className="font-semibold text-navy">{property.year_built || "—"}</p>
+                </div>
               </div>
             </div>
-
-            {/* After */}
-            <div className="border-t border-stone/10 bg-gradient-to-br from-copper/5 to-cream p-10 md:border-l md:border-t-0 md:p-12">
-              <p className="mb-2 text-xs font-semibold tracking-[0.2em] uppercase text-copper">
-                After Projecture
-              </p>
-              <h2 className="text-2xl font-bold text-navy">The Transformation</h2>
-
-              {primaryConcept ? (
-                <>
-                  <p className="mt-4 leading-relaxed text-stone-light">
-                    {primaryConcept.description}
-                  </p>
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    <DetailCard
-                      label="Renovation Cost"
-                      value={`${formatPrice(primaryConcept.estimated_cost_low)} – ${formatPrice(primaryConcept.estimated_cost_high)}`}
-                      highlight
-                    />
-                    <DetailCard
-                      label="Timeline"
-                      value={primaryConcept.estimated_timeline_weeks ? `${primaryConcept.estimated_timeline_weeks} weeks` : "TBD"}
-                      highlight
-                    />
-                    <DetailCard
-                      label="Projected Value"
-                      value={formatPrice(primaryConcept.estimated_arv)}
-                      highlight
-                    />
-                    <DetailCard
-                      label="ROI"
-                      value={primaryConcept.roi_percentage ? `${primaryConcept.roi_percentage}%` : "TBD"}
-                      highlight
-                    />
-                  </div>
-                </>
-              ) : (
-                <p className="mt-4 text-stone-light">
-                  Renovation concepts are being developed for this property. Check back soon.
-                </p>
-              )}
-            </div>
           </div>
-
-          {/* Additional detail cards below side-by-side */}
-          {(property.estimated_market_value || property.sqft) && (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {property.estimated_market_value && (
-                <DetailCard label="Estimated Market Value" value={formatPrice(property.estimated_market_value)} />
-              )}
-              {property.sqft && (
-                <DetailCard
-                  label="Price / sqft"
-                  value={`$${Math.round((property.estimated_market_value || property.listing_price || 0) / property.sqft).toLocaleString()}`}
-                />
-              )}
-              {primaryConcept && (
-                <DetailCard
-                  label="Potential Value Created"
-                  value={`${formatPrice((primaryConcept.estimated_arv || 0) - (property.estimated_market_value || 0) - (primaryConcept.estimated_cost_high || 0))}`}
-                  highlight
-                />
-              )}
-            </div>
-          )}
         </Container>
       </section>
 
-      {/* What It Could Become — Detailed Concepts */}
-      <section className="bg-cream-dark py-16">
-        <Container>
-          <div className="mb-10">
-            <p className="text-xs font-semibold tracking-[0.2em] uppercase text-copper">The Potential</p>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl text-navy">
-              Renovation Concepts
-            </h2>
-            <p className="mt-3 max-w-2xl text-stone-light">
-              Detailed cost breakdowns developed by our team with data from 18 years of local project history.
-            </p>
-          </div>
-
-          {property.renovation_concepts.length > 0 ? (
-            <div className="space-y-10">
-              {property.renovation_concepts.map((concept) => (
-                <RenovationConcept key={concept.id} concept={concept} />
+      {/* Section 4: What's Included */}
+      {property.included_features && property.included_features.length > 0 && (
+        <section className="bg-cream-dark py-16">
+          <Container>
+            <h2 className="mb-8 text-2xl font-bold text-navy">What&apos;s Included</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {property.included_features.map((feature) => (
+                <div
+                  key={feature}
+                  className="flex items-start gap-3 rounded-lg border border-stone/10 bg-white p-4"
+                >
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="mt-0.5 shrink-0 text-copper">
+                    <path d="M5 10l3 3 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="text-sm leading-relaxed text-stone">{feature}</span>
+                </div>
               ))}
             </div>
-          ) : (
-            <div className="rounded-xl border border-stone/10 bg-white p-10 text-center shadow-sm">
-              <p className="text-lg font-semibold text-navy">
-                Renovation concepts are being developed for this property
-              </p>
-              <p className="mt-2 text-sm text-stone-light">
-                Our team is preparing detailed cost breakdowns and transformation plans. Check back soon.
+          </Container>
+        </section>
+      )}
+
+      {/* Section 5: The Team */}
+      <section className="py-16">
+        <Container>
+          <h2 className="mb-8 text-center text-2xl font-bold text-navy">The Team Behind Your Home</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-xl border border-stone/10 bg-white p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-navy">Steinmetz Real Estate</h3>
+              <p className="mt-1 text-sm text-copper">William Raveis</p>
+              <p className="mt-3 text-sm leading-relaxed text-stone-light">
+                26+ years in the Newton market, $590M+ in career sales. Sarina Steinmetz is one of the top-producing
+                agents in the William Raveis network, bringing unmatched local market expertise.
               </p>
             </div>
-          )}
+            <div className="rounded-xl border border-stone/10 bg-white p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-navy">Bay State Remodeling</h3>
+              <p className="mt-1 text-sm text-copper">Licensed Design-Build Contractor</p>
+              <p className="mt-3 text-sm leading-relaxed text-stone-light">
+                18+ years in business, 170+ five-star Google reviews. Zion Steinmetz and team deliver full-service
+                renovation from design through construction, on time and on budget.
+              </p>
+            </div>
+          </div>
         </Container>
       </section>
 
-      {/* Financial Summary */}
-      {primaryConcept && (
-        <section className="py-16">
-          <Container size="md">
-            <div className="text-center">
-              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-copper">The Numbers</p>
-              <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy">Financial Summary</h2>
-            </div>
-
-            <div className="mt-10 rounded-2xl border border-copper/20 bg-gradient-to-b from-copper/5 to-white p-8 md:p-10 shadow-sm">
-              <div className="grid gap-6 md:grid-cols-2">
-                <SummaryRow
-                  label="Current Value"
-                  value={formatPrice(property.estimated_market_value)}
-                />
-                <SummaryRow
-                  label="Renovation Investment"
-                  value={`${formatPrice(primaryConcept.estimated_cost_low)} – ${formatPrice(primaryConcept.estimated_cost_high)}`}
-                />
-                <SummaryRow
-                  label="Total Investment"
-                  value={`${formatPrice((property.estimated_market_value || 0) + (primaryConcept.estimated_cost_low || 0))} – ${formatPrice((property.estimated_market_value || 0) + (primaryConcept.estimated_cost_high || 0))}`}
-                />
-                <SummaryRow
-                  label="Projected After-Renovation Value"
-                  value={formatPrice(primaryConcept.estimated_arv)}
-                  highlight
-                />
-                <SummaryRow
-                  label="Potential Value Created"
-                  value={`${formatPrice((primaryConcept.estimated_arv || 0) - (property.estimated_market_value || 0) - (primaryConcept.estimated_cost_high || 0))} – ${formatPrice((primaryConcept.estimated_arv || 0) - (property.estimated_market_value || 0) - (primaryConcept.estimated_cost_low || 0))}`}
-                  highlight
-                />
-                <SummaryRow
-                  label="Estimated ROI"
-                  value={primaryConcept.roi_percentage ? `${primaryConcept.roi_percentage}%` : "TBD"}
-                  highlight
-                />
-              </div>
-
-              <p className="mt-8 text-center text-xs text-stone-lighter">
-                All estimates based on 18 years of local project data. Actual costs determined after consultation.
-              </p>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* Financing Calculator */}
-      {primaryConcept && (
-        <section className="bg-cream-dark py-16">
-          <Container size="md">
-            <div className="text-center">
-              <p className="text-xs font-semibold tracking-[0.2em] uppercase text-copper">Financing</p>
-              <h2 className="mt-2 text-3xl font-bold tracking-tight text-navy">Estimate Your Payment</h2>
-              <p className="mt-3 text-stone-light">
-                Pre-qualified renovation financing available through our lending partners.
-              </p>
-            </div>
-
-            <div className="mt-10">
-              <FinancingCalculator
-                purchasePrice={property.estimated_market_value || property.listing_price || 0}
-                renovationBudget={Math.round(
-                  ((primaryConcept.estimated_cost_low || 0) + (primaryConcept.estimated_cost_high || 0)) / 2
-                )}
-              />
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* Lead Capture */}
-      <section className="py-16">
+      {/* Section 6: Interest Form */}
+      <section className="bg-cream-dark py-16">
         <Container size="sm">
           <div className="text-center">
-            <h2 className="text-2xl font-bold text-navy">Interested in This Property?</h2>
+            <h2 className="text-2xl font-bold text-navy">Interested in This Home?</h2>
             <p className="mt-3 text-stone-light">
-              Tell us about yourself and we&apos;ll reach out with more details about this property and its renovation potential.
+              Secure your interest early — these homes are offered on a first-come basis.
             </p>
           </div>
           <div className="mt-8 rounded-2xl border border-stone/10 bg-white p-8 shadow-sm">
@@ -381,11 +406,11 @@ export default async function PropertyDetailPage({
         </Container>
       </section>
 
-      {/* Similar Properties */}
+      {/* Section 7: Similar Properties */}
       {similar.length > 0 && (
-        <section className="bg-cream-dark py-16">
+        <section className="py-16">
           <Container>
-            <h2 className="mb-8 text-2xl font-bold text-navy">Similar Properties</h2>
+            <h2 className="mb-8 text-2xl font-bold text-navy">More Properties</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {similar.map((p) => (
                 <PropertyCard key={p.id} property={p} />
@@ -398,7 +423,16 @@ export default async function PropertyDetailPage({
   );
 }
 
-function DetailCard({
+function SpecCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border border-stone/10 bg-white p-4">
+      <p className="text-xs text-stone-lighter">{label}</p>
+      <p className="mt-1 text-lg font-bold text-navy">{value}</p>
+    </div>
+  );
+}
+
+function DetailRow({
   label,
   value,
   capitalize = false,
@@ -412,28 +446,9 @@ function DetailCard({
   return (
     <div className="rounded-lg border border-stone/10 bg-white p-4">
       <p className="text-xs text-stone-lighter">{label}</p>
-      <p className={`mt-1 font-semibold ${capitalize ? "capitalize" : ""} ${highlight ? "text-copper" : "text-navy"}`}>{value}</p>
-    </div>
-  );
-}
-
-function SummaryRow({
-  label,
-  value,
-  highlight = false,
-}: {
-  label: string;
-  value: string;
-  highlight?: boolean;
-}) {
-  return (
-    <div className="flex items-center justify-between border-b border-stone/10 py-3 last:border-0">
-      <span className="text-sm text-stone-light">{label}</span>
-      <span
-        className={`text-sm font-bold ${highlight ? "text-copper" : "text-navy"}`}
-      >
+      <p className={`mt-1 font-semibold ${capitalize ? "capitalize" : ""} ${highlight ? "text-copper" : "text-navy"}`}>
         {value}
-      </span>
+      </p>
     </div>
   );
 }

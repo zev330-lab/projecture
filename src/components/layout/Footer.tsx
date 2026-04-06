@@ -16,7 +16,7 @@ export default function Footer() {
           <div className="md:col-span-2">
             <p className="text-xl font-bold tracking-tight text-navy font-[family-name:var(--font-heading)]">Projecture</p>
             <p className="mt-2 text-sm text-stone-light">
-              See beyond the listing. We show you what it could be. Then we build it.
+              Fully renovated homes in Newton. Designed, built, and delivered by our team.
             </p>
             <p className="mt-4 text-xs text-stone-lighter">
               A Steinmetz Real Estate &times; Bay State Remodeling venture

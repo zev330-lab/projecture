@@ -5,8 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
-  { href: "/how-it-works", label: "How It Works" },
   { href: "/properties", label: "Properties" },
+  { href: "/how-it-works", label: "How It Works" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -43,7 +43,7 @@ export default function Navbar() {
             href="/contact"
             className="rounded-md bg-navy px-7 py-3 text-sm font-semibold text-cream transition-colors hover:bg-navy-light"
           >
-            Get Started
+            I&apos;m Interested
           </Link>
         </div>
 
@@ -88,7 +88,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="mt-2 rounded-md bg-navy py-3 text-center text-sm font-semibold text-white"
             >
-              Get Started
+              I&apos;m Interested
             </Link>
           </div>
         </div>

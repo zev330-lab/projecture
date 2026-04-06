@@ -7,16 +7,15 @@ function fakeId(prefix: string, index: number): string {
 }
 
 function getFallbackProperties(): Property[] {
-  return seedData.properties.map((p, i) => ({
-    ...p,
+  return (seedData.properties as Record<string, unknown>[]).map((p, i) => ({
+    ...(p as Omit<Property, "id" | "mls_number" | "days_on_market" | "photos" | "created_at" | "updated_at">),
     id: fakeId("prop", i),
-    listing_status: p.listing_status as Property["listing_status"],
     mls_number: null,
     days_on_market: null,
     photos: null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-  }));
+  })) as Property[];
 }
 
 function getFallbackPropertyWithConcepts(id: string): PropertyWithConcepts | null {
@@ -87,7 +86,62 @@ function getFallbackPropertyWithConcepts(id: string): PropertyWithConcepts | nul
   return { ...property, renovation_concepts: concepts };
 }
 
+/** Get all published properties (public-facing) */
 export async function getProperties(): Promise<Property[]> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return getFallbackProperties().filter(
+      (p) => p.property_status === "published" || p.property_status === "under_contract" || p.property_status === "sold"
+    );
+  }
+
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("properties")
+      .select("*")
+      .in("property_status", ["published", "under_contract", "sold"])
+      .order("finished_price", { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      return getFallbackProperties().filter(
+        (p) => p.property_status === "published" || p.property_status === "under_contract" || p.property_status === "sold"
+      );
+    }
+    return data as Property[];
+  } catch {
+    return getFallbackProperties().filter(
+      (p) => p.property_status === "published" || p.property_status === "under_contract" || p.property_status === "sold"
+    );
+  }
+}
+
+/** Get featured/published properties for homepage */
+export async function getFeaturedProperties(): Promise<Property[]> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    return getFallbackProperties().filter((p) => p.property_status === "published");
+  }
+
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("properties")
+      .select("*")
+      .eq("property_status", "published")
+      .order("finished_price", { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      return getFallbackProperties().filter((p) => p.property_status === "published");
+    }
+    return data as Property[];
+  } catch {
+    return getFallbackProperties().filter((p) => p.property_status === "published");
+  }
+}
+
+/** Get all properties for dashboard (all statuses) */
+export async function getAllProperties(): Promise<Property[]> {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
     return getFallbackProperties();
   }
@@ -98,7 +152,7 @@ export async function getProperties(): Promise<Property[]> {
     const { data, error } = await supabase
       .from("properties")
       .select("*")
-      .order("renovation_score", { ascending: false });
+      .order("created_at", { ascending: false });
 
     if (error || !data || data.length === 0) {
       return getFallbackProperties();
@@ -106,29 +160,6 @@ export async function getProperties(): Promise<Property[]> {
     return data as Property[];
   } catch {
     return getFallbackProperties();
-  }
-}
-
-export async function getFeaturedProperties(): Promise<Property[]> {
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    return getFallbackProperties().filter((p) => p.featured);
-  }
-
-  try {
-    const { createClient } = await import("@/lib/supabase/server");
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("properties")
-      .select("*")
-      .eq("featured", true)
-      .order("renovation_score", { ascending: false });
-
-    if (error || !data || data.length === 0) {
-      return getFallbackProperties().filter((p) => p.featured);
-    }
-    return data as Property[];
-  } catch {
-    return getFallbackProperties().filter((p) => p.featured);
   }
 }
 
@@ -157,7 +188,6 @@ export async function getPropertyWithConcepts(
       .from("renovation_concepts")
       .select("*")
       .eq("property_id", id)
-      .eq("status", "published")
       .order("created_at", { ascending: false });
 
     const conceptsWithCosts = await Promise.all(
@@ -191,7 +221,7 @@ export async function getSimilarProperties(
       (p) =>
         p.id !== property.id &&
         (p.neighborhood === property.neighborhood ||
-          Math.abs((p.listing_price || 0) - (property.listing_price || 0)) < 400000)
+          Math.abs((p.finished_price || 0) - (property.finished_price || 0)) < 400000)
     )
     .slice(0, limit);
 }

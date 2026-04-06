@@ -4,27 +4,27 @@ import Container from "@/components/layout/Container";
 
 export const metadata: Metadata = {
   title: "About — Projecture",
-  description: "Meet the team behind Projecture — a joint venture between Steinmetz Real Estate and Bay State Remodeling.",
+  description: "Meet the team behind Projecture — a joint venture between Steinmetz Real Estate and Bay State Remodeling delivering fully renovated homes.",
 };
 
 const team = [
   {
     name: "Zev Steinmetz",
-    role: "Technology & Real Estate",
+    role: "Technology & Strategy",
     firm: "Steinmetz Real Estate — William Raveis",
-    bio: "Zev brings a unique combination of technology expertise and deep real estate market knowledge. With a background in AI systems and real estate, he bridges the gap between data-driven insights and the human side of buying a home. He leads Projecture's technology platform and market strategy.",
+    bio: "Zev brings a unique combination of technology expertise and deep real estate market knowledge. He leads Projecture's platform and market strategy, using data and AI to identify the best opportunities and deliver a seamless buyer experience.",
   },
   {
     name: "Sarina Steinmetz",
-    role: "Market Strategy & Client Relations",
+    role: "Market Strategy & Acquisitions",
     firm: "Steinmetz Real Estate — William Raveis",
-    bio: "With 26+ years in the Newton market and $590M+ in career sales, Sarina is one of the most accomplished agents in the area. Named Top 1.5% of agents nationally, she brings unmatched knowledge of every neighborhood, street, and opportunity in the market. Her relationships and reputation are the foundation of Projecture's real estate expertise.",
+    bio: "With 26+ years in the Newton market and $590M+ in career sales, Sarina is one of the most accomplished agents in the area. Named Top 1.5% nationally, she identifies acquisition opportunities and ensures every Projecture home is priced right for the market.",
   },
   {
     name: "Zion Steinmetz",
     role: "Renovation & Construction",
     firm: "Bay State Remodeling",
-    bio: "As the leader of Bay State Remodeling, Zion brings 18+ years of hands-on renovation experience to every project. With 170+ five-star Google reviews and a portfolio spanning hundreds of completed projects, he provides the real-world cost data and construction expertise that makes Projecture's estimates uniquely accurate.",
+    bio: "As the leader of Bay State Remodeling, Zion brings 18+ years of hands-on renovation experience. With 170+ five-star Google reviews and hundreds of completed projects, he oversees every renovation from design through construction to ensure the highest quality.",
   },
 ];
 
@@ -39,7 +39,7 @@ const credentials = [
       { label: "Markets", value: "Newton & Beyond" },
     ],
     description:
-      "One of the top-producing teams in the William Raveis network. Specialists in Newton, Brookline, Wellesley, and the Greater Boston luxury market. Known for deep neighborhood knowledge and a consultative, data-driven approach to real estate.",
+      "One of the top-producing teams in the William Raveis network. Specialists in Newton, Brookline, Wellesley, and the Greater Boston luxury market. Known for deep neighborhood knowledge and a consultative approach to real estate.",
   },
   {
     firm: "Bay State Remodeling",
@@ -66,37 +66,45 @@ export default function AboutPage() {
               About Projecture
             </p>
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-navy">
-              Changing How People
+              We Take the Risk.
               <br />
-              Buy Homes
+              You Get the Home.
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-stone-light">
-              Projecture was born from a simple observation: the best home for a buyer often isn&apos;t the one that looks perfect today — it&apos;s the one with the right bones, the right lot, and the right potential. We help buyers see that potential.
+              Projecture identifies homes with untapped potential, renovates them to the highest standard, and delivers
+              the finished product to buyers — turnkey, move-in ready, under warranty.
             </p>
           </div>
         </Container>
       </section>
 
-      {/* Why */}
+      {/* Our Model */}
       <section className="py-20">
         <Container>
           <div className="grid gap-12 md:grid-cols-2">
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-navy">The Problem We Solve</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-navy">Our Model</h2>
               <p className="mt-6 leading-relaxed text-stone-light">
-                In markets like Newton, 80% of homes were built before 1970. Most buyers want move-in ready, but move-in ready inventory is scarce and expensive. Meanwhile, properties with enormous potential sit overlooked because buyers can&apos;t envision the transformation.
+                Most buyers want move-in ready. But in markets like Newton, where 80% of homes were built before 1970,
+                the best opportunities often need renovation. The problem? Buyers don&apos;t want to manage a renovation.
+                They don&apos;t want to hire contractors, pull permits, or live through construction.
               </p>
               <p className="mt-4 leading-relaxed text-stone-light">
-                The renovation gap is real: buyers don&apos;t know what&apos;s possible, what it costs, or who they can trust to do the work. Projecture closes that gap with data, visualization, and an integrated team.
+                Projecture solves this. We acquire promising properties, design and execute a complete renovation through
+                Bay State Remodeling, and sell the finished home at an all-in price. The buyer gets a move-in ready home
+                without ever touching a paint swatch or calling a contractor.
               </p>
             </div>
             <div>
-              <h2 className="text-3xl font-bold tracking-tight text-navy">Our Vision</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-navy">Why It Works</h2>
               <p className="mt-6 leading-relaxed text-stone-light">
-                We believe every property has a story about what it could become. Projecture tells that story with AI-generated visualizations, accurate cost data from 18 years of local project history, and a team that can execute the vision from search to move-in.
+                We combine Steinmetz Real Estate&apos;s 26+ years of market expertise with Bay State Remodeling&apos;s
+                18+ years of renovation experience. We know which properties to buy, exactly what they&apos;ll cost
+                to renovate, and what the finished product will sell for.
               </p>
               <p className="mt-4 leading-relaxed text-stone-light">
-                We&apos;re starting in Newton, MA — but the model works in any market where housing stock needs updating and buyers need help seeing possibility.
+                The result is a better deal for everyone. Buyers get a renovated home at a fair price without the risk
+                or hassle of managing a renovation. And they can see exactly what they&apos;re getting before they commit.
               </p>
             </div>
           </div>
@@ -172,15 +180,21 @@ export default function AboutPage() {
         <Container size="sm">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-navy">
-              Let&apos;s Build Something Together
+              See What&apos;s Available
             </h2>
             <p className="mt-4 text-stone-light">
-              Whether you&apos;re buying, selling, or just curious about what&apos;s possible — we&apos;d love to hear from you.
+              Browse our current inventory of fully renovated homes in Newton.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <Link
+                href="/properties"
+                className="inline-block rounded-md bg-navy px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-navy-light"
+              >
+                Browse Properties
+              </Link>
               <Link
                 href="/contact"
-                className="inline-block rounded-md bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
+                className="inline-block rounded-md border border-stone/20 px-8 py-3.5 text-sm font-semibold tracking-wide text-stone transition-all hover:bg-stone/5"
               >
                 Get in Touch
               </Link>

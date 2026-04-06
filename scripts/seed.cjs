@@ -27,11 +27,18 @@ async function seed() {
   await supabase.from("properties").delete().neq("id", "00000000-0000-0000-0000-000000000000");
   console.log("  Done.\n");
 
-  // 2. Insert properties
+  // 2. Insert properties (includes new finished-home fields)
   console.log("Inserting properties...");
+  const propertyPayloads = seedData.properties.map((p) => {
+    // Build the payload — exclude any keys that aren't DB columns
+    const payload = { ...p };
+    // included_features should be a Postgres text[] — already an array in JSON
+    return payload;
+  });
+
   const { data: insertedProperties, error: propError } = await supabase
     .from("properties")
-    .insert(seedData.properties)
+    .insert(propertyPayloads)
     .select();
 
   if (propError) {
@@ -115,11 +122,15 @@ async function seed() {
   console.log(`  Inserted ${conceptCount} concepts with ${costItemCount} cost items.\n`);
 
   // Summary
+  const published = insertedProperties.filter(p => p.property_status === "published").length;
+  const approved = insertedProperties.filter(p => p.property_status === "approved").length;
   console.log("=== Seed Complete ===");
   console.log(`Properties: ${insertedProperties.length}`);
+  console.log(`  Published: ${published}`);
+  console.log(`  Approved: ${approved}`);
+  console.log(`  Other: ${insertedProperties.length - published - approved}`);
   console.log(`Concepts: ${conceptCount}`);
   console.log(`Cost Items: ${costItemCount}`);
-  console.log(`Featured: ${insertedProperties.filter(p => p.featured).length}`);
 }
 
 seed().catch(console.error);

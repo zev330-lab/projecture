@@ -17,13 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Projecture — See Beyond the Listing",
+  title: "Projecture — Fully Renovated Homes in Newton",
   description:
-    "Projecture shows you what a home could become — with real costs, real timelines, and the team to make it happen. Launching in Newton, MA.",
+    "Browse fully renovated homes in Newton, MA. Designed, built, and delivered by Steinmetz Real Estate and Bay State Remodeling.",
   openGraph: {
-    title: "Projecture — See Beyond the Listing",
+    title: "Projecture — Fully Renovated Homes in Newton",
     description:
-      "We show you what it could be. Then we build it. Future-state property marketplace launching in Newton, MA.",
+      "Move-in ready homes in Newton's best neighborhoods. We handle the renovation — you get the keys.",
     type: "website",
   },
 };

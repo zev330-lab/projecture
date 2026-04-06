@@ -6,7 +6,7 @@ import PropertiesClient from "./PropertiesClient";
 export const metadata: Metadata = {
   title: "Properties — Projecture",
   description:
-    "Browse properties with renovation potential in Newton, MA and surrounding towns.",
+    "Browse fully renovated homes in Newton, MA. See the finished product, the price, and the timeline.",
 };
 
 export default async function PropertiesPage() {
@@ -19,14 +19,13 @@ export default async function PropertiesPage() {
         <Container>
           <div className="text-center">
             <p className="mb-4 text-sm font-medium tracking-[0.25em] uppercase text-copper">
-              Marketplace
+              Our Homes
             </p>
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-navy">
-              Properties with Potential
+              Fully Renovated Homes
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-light">
-              Every property includes renovation concepts with real costs,
-              timelines, and projected values.
+              Move-in ready homes in Newton&apos;s best neighborhoods. Designed, built, and delivered by our team.
             </p>
           </div>
         </Container>

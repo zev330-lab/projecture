@@ -4,41 +4,33 @@ import Container from "@/components/layout/Container";
 
 export const metadata: Metadata = {
   title: "How It Works — Projecture",
-  description: "Learn how Projecture helps you see the potential in every home — from browsing to building.",
+  description: "Learn how Projecture delivers fully renovated homes — from browsing to move-in.",
 };
 
 const steps = [
   {
     num: "01",
-    title: "Browse Properties by Potential",
+    title: "We Identify Homes with Untapped Potential",
     description:
-      "Traditional listings show you what a home is today. Projecture shows you what it could become. Every property in our marketplace includes detailed renovation concepts — so you can search by the finished product, not just the current state.",
-    buyer: "Browse our curated listings filtered by neighborhood, budget, and renovation scope. Each property shows its current state alongside its potential.",
-    timeline: "Start anytime — browse at your own pace",
+      "Our team scours Newton's best neighborhoods for properties with the right bones, the right lot, and the right location. We look for homes that most buyers overlook — because they can't see past the dated kitchen or the single bathroom. We see the finished product before the first wall comes down.",
+    buyer: "Browse our curated listings of fully renovated homes. See the finished product — the price, the specs, the timeline — before construction even begins.",
+    timeline: "New homes added regularly",
   },
   {
     num: "02",
-    title: "Visualize the Transformation",
+    title: "Our Team Designs and Plans the Transformation",
     description:
-      "AI-generated renderings bring renovation concepts to life. See what a dated 1955 kitchen looks like as a modern open-concept space. Explore different finish levels and layout options before committing to anything.",
-    buyer: "Review AI-rendered visualizations of each renovation concept. Compare multiple design options. Get a real sense of the finished space.",
-    timeline: "Concepts ready when you browse",
+      "Bay State Remodeling's design team creates a complete renovation plan — open-concept kitchens, spa-inspired bathrooms, finished basements, and every detail in between. We handle all design work, permitting, and planning so you don't have to.",
+    buyer: "Reserve your future home with a commitment. Work with our team to review finishes, timelines, and any customization options available for your property.",
+    timeline: "Design and permitting: 4-8 weeks",
   },
   {
     num: "03",
-    title: "Know the Real Numbers",
+    title: "Bay State Remodeling Builds It to the Highest Standard",
     description:
-      "Our cost estimates aren't pulled from national averages — they're built from 18 years and hundreds of completed renovation projects in Newton, Brookline, Wellesley, and the surrounding area. You see line-item breakdowns, realistic timelines, and projected after-renovation values.",
-    buyer: "Review detailed cost breakdowns by category (kitchen, bath, structural, etc.), estimated timelines, and projected ROI. No surprises.",
-    timeline: "Numbers available for every published concept",
-  },
-  {
-    num: "04",
-    title: "Build It with One Team",
-    description:
-      "When you're ready, our integrated team handles everything. Steinmetz Real Estate manages the acquisition. Bay State Remodeling executes the renovation. Design, permits, construction — one team, one process, one point of accountability.",
-    buyer: "Work with a single team from property search through renovation completion. Design consultations, permit management, and full construction management included.",
-    timeline: "Typical renovation: 4-8 months depending on scope",
+      "With 18+ years of experience and 170+ five-star reviews, Bay State Remodeling executes every renovation to the highest standard. From structural work to finish carpentry, every detail is handled by our team. You get a fully renovated, move-in ready home — with a builder warranty.",
+    buyer: "We handle everything — design, permits, construction. You get the keys to your fully renovated home, on time and under warranty.",
+    timeline: "Typical construction: 4-6 months",
   },
 ];
 
@@ -48,32 +40,32 @@ const faqs = [
     a: "We're launching in Newton, MA and expanding to Brookline, Wellesley, Lexington, Cambridge, and Weston.",
   },
   {
-    q: "How accurate are the renovation cost estimates?",
-    a: "Our estimates are built from 18 years and hundreds of completed renovation projects in the local market. They include labor, materials, permits, and professional fees. While actual costs can vary based on specific conditions and selections, our estimates are among the most accurate available because they're based on real local project data — not national averages.",
+    q: "What's included in the purchase price?",
+    a: "The finished price includes everything — the property, the complete renovation, permits, design, and a 1-year builder warranty. What you see is what you pay. There are no hidden costs or renovation budgets to manage.",
   },
   {
-    q: "Do I have to use your renovation team?",
-    a: "Our integrated model works best when the same team handles both the real estate transaction and the renovation. However, the property data and renovation concepts are valuable regardless of who executes the work.",
+    q: "Can I customize finishes?",
+    a: "For homes in the early construction phase, we offer finish selection options — countertop materials, cabinet styles, tile selections, paint colors, and hardware. The earlier you reserve, the more flexibility you have.",
   },
   {
-    q: "How are properties selected for the marketplace?",
-    a: "We identify properties with strong renovation potential — good bones, desirable locations, and clear value-add opportunities. Each property is evaluated for its transformation potential before being listed.",
+    q: "How do I reserve a home?",
+    a: "Express interest through our website or contact our team directly. We'll schedule a consultation to discuss the property, timeline, and next steps. Homes are offered on a first-come basis.",
   },
   {
-    q: "What types of renovations do you handle?",
-    a: "Everything from kitchen and bathroom remodels to full whole-home renovations, additions, and historic restorations. Bay State Remodeling is a fully licensed design-build contractor.",
+    q: "Who is behind Projecture?",
+    a: "Projecture is a joint venture between Steinmetz Real Estate (26+ years, $590M+ in sales) and Bay State Remodeling (18+ years, 170+ five-star reviews). We combine deep real estate expertise with proven renovation execution.",
   },
   {
-    q: "Can I customize the renovation scope?",
-    a: "Absolutely. Our concepts are starting points. You can adjust scope, modify finishes, add or remove elements — we build exactly what you want.",
+    q: "What types of renovations do you do?",
+    a: "Full whole-home renovations — kitchens, bathrooms, basements, systems, exteriors, and additions. Every home receives a comprehensive transformation designed to meet modern buyer expectations.",
   },
   {
-    q: "How does financing work?",
-    a: "We can guide you through renovation-specific financing options including FHA 203(k) loans, Fannie Mae HomeStyle renovation loans, and construction-to-permanent financing. We work with lenders experienced in renovation lending.",
+    q: "How is this different from buying a fixer-upper?",
+    a: "With Projecture, you're buying the finished product — not a project. We take the risk, manage the renovation, and deliver a move-in ready home. You never have to coordinate contractors, manage a budget, or live through construction.",
   },
   {
-    q: "When does Projecture launch?",
-    a: "Spring 2026 in Newton, MA. Join our early access list to be the first to see properties.",
+    q: "What if I want to buy a home that isn't listed yet?",
+    a: "Join our notification list to be the first to see new homes as they become available. We add new properties regularly as we identify opportunities in the market.",
   },
 ];
 
@@ -88,10 +80,10 @@ export default function HowItWorksPage() {
               Our Process
             </p>
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-navy">
-              From Listing to Living
+              Browse. Reserve. Move In.
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-light">
-              We show you what it could be. Then we build it. Here&apos;s exactly how the process works.
+              We take the risk and do the work. You get a fully renovated, move-in ready home.
             </p>
           </div>
         </Container>
@@ -154,17 +146,17 @@ export default function HowItWorksPage() {
         <Container size="sm">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl text-navy">
-              Ready to See What&apos;s Possible?
+              Ready to See Your Future Home?
             </h2>
             <p className="mt-4 text-stone-light">
-              Join our early access list and be the first to browse properties with renovation potential.
+              Browse fully renovated homes in Newton&apos;s best neighborhoods.
             </p>
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/properties"
-                className="rounded-md bg-copper px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-copper-dark"
+                className="rounded-md bg-navy px-8 py-3.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-navy-light"
               >
-                Explore Properties
+                Browse Properties
               </Link>
               <Link
                 href="/contact"
