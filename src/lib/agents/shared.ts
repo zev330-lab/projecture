@@ -16,11 +16,16 @@ export function getClaudeClient(): Anthropic {
   return _client;
 }
 
+export type ClaudeModel =
+  | "claude-haiku-4-5-20251001"
+  | "claude-sonnet-4-20250514"
+  | "claude-opus-4-0-20250514";
+
 export async function callClaude(
   prompt: string,
   opts: {
     system?: string;
-    model?: "claude-sonnet-4-20250514" | "claude-opus-4-0-20250115";
+    model?: ClaudeModel;
     maxTokens?: number;
     temperature?: number;
   } = {}

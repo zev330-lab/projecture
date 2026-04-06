@@ -193,7 +193,7 @@ export async function runPropertyScout(params: ScoutParams = {}): Promise<ScoutR
 
         const { text, inputTokens, outputTokens } = await callClaude(
           `You are a real estate acquisition analyst for a company that buys, renovates, and sells homes in the Greater Boston / MetroWest area. Review these property candidates and provide a 1-2 sentence scout note for each explaining WHY this property is a good renovation candidate:\n\n${propertyList}\n\nRespond in JSON format: { "notes": ["note1", "note2", ...] }`,
-          { model: "claude-sonnet-4-20250514", maxTokens: 1024 }
+          { model: "claude-haiku-4-5-20251001", maxTokens: 1024 }
         );
         totalTokens = inputTokens + outputTokens;
 

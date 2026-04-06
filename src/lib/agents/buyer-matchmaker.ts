@@ -242,7 +242,7 @@ export async function runBuyerMatchmaker(params: MatchmakerParams = {}): Promise
 
         const { text, inputTokens, outputTokens } = await callClaude(
           `You are a real estate matchmaker. For each buyer-property match below, write a personalized 1-2 sentence recommendation explaining why this property is perfect for this buyer. Be warm and specific.\n\n${matchList}\n\nRespond in JSON: { "recommendations": ["rec1", "rec2", ...] }`,
-          { model: "claude-sonnet-4-20250514", maxTokens: 1024 }
+          { model: "claude-haiku-4-5-20251001", maxTokens: 1024 }
         );
         totalTokens = inputTokens + outputTokens;
 

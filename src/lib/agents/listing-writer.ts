@@ -120,7 +120,7 @@ Respond in JSON format:
   "social_post": "...",
   "email": "..."
 }`,
-      { model: "claude-sonnet-4-20250514", maxTokens: 3000, temperature: 0.8 }
+      { model: "claude-opus-4-0-20250514", maxTokens: 3000, temperature: 0.8 }
     );
 
     totalTokens = inputTokens + outputTokens;
