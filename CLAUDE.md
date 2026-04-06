@@ -10,7 +10,7 @@ https://projecture.vercel.app
 zev330-lab/projecture
 
 ## Current State
-Phase 1: Foundation build — full site, Supabase backend, dashboard, auth
+Phase 2: Property Engine — 20 properties, 8 concepts, 200 cost items, functional marketplace
 
 ## Tech Stack
 Next.js 16, TypeScript, Tailwind CSS v4, Supabase (auth + DB), Vercel
@@ -24,6 +24,13 @@ Set these in .env.local (and Vercel dashboard):
 - `CRON_SECRET` — Secret for cron job auth (Phase 3)
 - `RESEND_API_KEY` — Resend email service (future)
 
+## Supabase
+- Project: projecture (qymkdtmfatxaobhikgqu)
+- Schema: supabase/migration.sql
+- Seed: scripts/seed.cjs (run with `export $(grep -v '^#' .env.local | grep -v '^$' | xargs) && node scripts/seed.cjs`)
+- Tables: leads, properties, renovation_concepts, cost_items, agent_logs, buyer_profiles, content
+- RLS enabled on all tables
+
 ## Setup Steps (for new environments)
 1. Create Supabase project at supabase.com, name it "projecture"
 2. Run `supabase/migration.sql` in Supabase SQL Editor
@@ -31,6 +38,7 @@ Set these in .env.local (and Vercel dashboard):
 4. Copy Supabase URL, anon key, service role key to .env.local
 5. Set same env vars in Vercel dashboard
 6. `npm install && npm run dev`
+7. Seed data: `export $(grep -v '^#' .env.local | grep -v '^$' | xargs) && node scripts/seed.cjs`
 
 ## Working Rules
 - Read this file at the start of every session
@@ -44,7 +52,8 @@ Set these in .env.local (and Vercel dashboard):
 ```
 src/
 ├── app/
-│   ├── page.tsx                # Home — premium landing page
+│   ├── page.tsx                # Home — server component, fetches featured properties
+│   ├── HomeClient.tsx          # Home — client component with scroll animations
 │   ├── layout.tsx              # Root layout with DM Sans + Inter, Navbar, Footer
 │   ├── globals.css             # Tailwind theme, animations
 │   ├── about/page.tsx          # About the venture and team
@@ -52,8 +61,11 @@ src/
 │   ├── how-it-works/page.tsx   # 4-step process + FAQ
 │   ├── login/page.tsx          # Supabase auth login
 │   ├── properties/
-│   │   ├── page.tsx            # Property listing (coming soon state)
-│   │   └── [id]/page.tsx       # Property detail with concepts
+│   │   ├── page.tsx            # Property listing (server: fetches data)
+│   │   ├── PropertiesClient.tsx # Property listing (client: filters, sort, grid)
+│   │   └── [id]/
+│   │       ├── page.tsx        # Property detail with concepts, financial summary
+│   │       └── FinancingCalculator.tsx # Mortgage/renovation calculator
 │   ├── dashboard/
 │   │   ├── layout.tsx          # Dashboard layout with sidebar
 │   │   ├── page.tsx            # Overview — stats, recent leads
@@ -76,12 +88,32 @@ src/
 │   └── dashboard/              # StatsCards, RecentLeads, AgentStatus
 ├── lib/
 │   ├── types.ts                # TypeScript interfaces for all tables
+│   ├── data/
+│   │   ├── seed-data.json      # Fallback JSON data (20 properties, concepts, cost templates)
+│   │   └── get-data.ts         # Data fetching with Supabase → JSON fallback
 │   └── supabase/
 │       ├── client.ts           # Browser Supabase client
 │       ├── server.ts           # Server Supabase client + service client
 │       └── middleware.ts       # Session management for auth
-└── middleware.ts               # Protects /dashboard routes
+├── middleware.ts               # Protects /dashboard routes
+scripts/
+├── seed.cjs                    # Seeds properties, concepts, cost items into Supabase
+supabase/
+├── migration.sql               # Full database schema + RLS policies
 ```
+
+## Data Flow
+- All public pages use `src/lib/data/get-data.ts` which tries Supabase first, falls back to JSON
+- Dashboard pages use Supabase client directly (require auth)
+- Lead capture POSTs to /api/leads → Supabase (or Formspree fallback)
+
+## Seed Data
+- 20 Newton properties across 6 villages (Newton Center, West Newton, Waban, Newton Highlands, Chestnut Hill, Newtonville)
+- 5 featured properties with 8 renovation concepts (mix of full reno + targeted updates)
+- 200 cost line items across kitchen, bath, basement, exterior, systems categories
+- Property types: Colonial, Cape, Ranch, Split-Level, Victorian
+- Years built: 1890-1962
+- Price range: $932K-$1.93M
 
 ## Lead Capture
 - Primary: Supabase leads table via /api/leads
@@ -99,28 +131,30 @@ src/
 - Typography: DM Sans (headings), Inter (body)
 - Dark-mode-first luxury aesthetic
 - Scroll-triggered fade-in animations
+- Property type gradient colors (amber=colonial, sky=cape, emerald=ranch, violet=split-level, rose=victorian)
 - Component library in src/components/ui/
 
-## Database
-- Schema in supabase/migration.sql
-- Tables: leads, properties, renovation_concepts, cost_items, agent_logs, buyer_profiles, content
-- RLS enabled on all tables with appropriate policies
-
 ## Recent Changes
-- Phase 1 complete build: full site with 6 public pages, 5 dashboard pages, 6 API routes
-- Supabase integration for auth, data, and lead capture
-- Component library with luxury dark aesthetic
-- Formspree fallback for lead capture when Supabase not configured
+- Phase 2: Property Engine complete
+  - 20 Newton properties seeded with realistic data
+  - 8 renovation concepts with 200 cost line items
+  - Functional property marketplace with filters (village, type, price, beds, sort)
+  - Property detail page with "What It Could Become" concepts, cost breakdowns, financial summary
+  - Financing calculator (mortgage + renovation loan estimator)
+  - Dynamic featured properties on homepage (pulls from Supabase)
+  - JSON fallback for all data — site renders even without Supabase
+  - Property cards with type-based gradient colors and renovation score badges
 
 ## Known Issues
 - Next.js 16 deprecation warning: "middleware" → "proxy" migration recommended (still works)
-- Supabase project needs to be created and credentials configured
-- Dashboard CRUD operations require Supabase connection to function
+- Dashboard CRUD requires Supabase connection
+- Photos are placeholder gradients — need real property photos or AI renders
+- Supabase env vars must be set in Vercel dashboard for production
 
 ## What's Next
-Phase 2: Property Engine
-- Create Supabase project and run migration
-- Add 5 real Newton properties with renovation concepts
-- AI visualization integration
-- Cost estimation engine using Bay State data
-- Property photo upload/management
+Phase 3: AI Agents
+- Property Scout agent (scans for new opportunities)
+- Cost Estimator agent (generates renovation breakdowns)
+- Visualization Engine (AI-generated renders)
+- Market Analyzer (ARV and ROI calculations)
+- Agent monitoring in dashboard
