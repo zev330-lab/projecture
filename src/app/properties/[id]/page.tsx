@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
 import Badge from "@/components/ui/Badge";
@@ -7,6 +8,7 @@ import PropertyCard from "@/components/property/PropertyCard";
 import LeadCaptureForm from "@/components/lead/LeadCaptureForm";
 import MortgageCalculator from "./MortgageCalculator";
 import { getPropertyWithConcepts, getSimilarProperties } from "@/lib/data/get-data";
+import { getPropertyPhotos } from "@/lib/data/photos";
 
 function formatPrice(price: number | null): string {
   if (!price) return "TBD";
@@ -85,6 +87,9 @@ export default async function PropertyDetailPage({
   const gradient = typeGradients[property.property_type || ""] || typeGradients.colonial;
   const status = statusLabels[property.property_status] || statusLabels.published;
   const timeline = getTimelineLabel(property.estimated_ready_date);
+  const photos = getPropertyPhotos(property.address);
+  const heroImage = photos?.card_image;
+  const galleryImages = photos?.gallery || [];
 
   return (
     <main className="pt-24">
@@ -105,22 +110,33 @@ export default async function PropertyDetailPage({
       <section className={`bg-gradient-to-b ${gradient} py-12`}>
         <Container>
           <div className="grid gap-8 lg:grid-cols-[1fr_420px]">
-            {/* Main image placeholder */}
-            <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-stone/10 bg-white/60">
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-lighter/40">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                  <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                  <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
-                </svg>
-                <span className="mt-2 text-sm font-medium">Rendering Coming Soon</span>
-              </div>
+            {/* Main image */}
+            <div className={`relative aspect-[16/10] overflow-hidden rounded-xl border border-stone/10 ${heroImage ? "bg-stone-100" : "bg-white/60"}`}>
+              {heroImage ? (
+                <Image
+                  src={heroImage}
+                  alt={`${property.address} — renovated home`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
+                  className="object-cover"
+                  priority
+                />
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-lighter/40">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                    <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                  <span className="mt-2 text-sm font-medium">Rendering Coming Soon</span>
+                </div>
+              )}
 
-              <div className="absolute left-4 top-4 flex gap-2">
+              <div className="absolute left-4 top-4 z-10 flex gap-2">
                 <Badge variant={status.variant} className="text-sm px-4 py-1.5">{status.label}</Badge>
               </div>
 
               {timeline && (
-                <div className="absolute right-4 top-4">
+                <div className="absolute right-4 top-4 z-10">
                   <span className="inline-flex items-center rounded-full bg-white/90 px-4 py-1.5 text-sm font-semibold text-navy shadow-sm backdrop-blur-sm">
                     Ready {timeline}
                   </span>
@@ -208,24 +224,38 @@ export default async function PropertyDetailPage({
             </h2>
           </div>
 
-          {/* Image gallery placeholders */}
+          {/* Image gallery */}
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {finishedImageLabels.map((label, i) => (
-              <div
-                key={label}
-                className={`relative overflow-hidden rounded-xl border border-stone/10 ${
-                  i === 0 ? "sm:col-span-2 lg:col-span-2 aspect-[2/1]" : "aspect-[4/3]"
-                }`}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-orange-50/40 to-cream flex flex-col items-center justify-center text-stone-lighter/50">
-                  <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
-                    <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                    <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                  <span className="mt-2 text-xs font-medium">{label}</span>
+            {(galleryImages.length > 0 ? galleryImages : finishedImageLabels).map((item, i) => {
+              const isImage = galleryImages.length > 0;
+              const label = finishedImageLabels[i] || "Gallery";
+              return (
+                <div
+                  key={`gallery-${i}`}
+                  className={`relative overflow-hidden rounded-xl border border-stone/10 ${
+                    i === 0 ? "sm:col-span-2 lg:col-span-2 aspect-[2/1]" : "aspect-[4/3]"
+                  }`}
+                >
+                  {isImage ? (
+                    <Image
+                      src={item}
+                      alt={`${property.address} — ${label}`}
+                      fill
+                      sizes={i === 0 ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 100vw, 33vw"}
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-orange-50/40 to-cream flex flex-col items-center justify-center text-stone-lighter/50">
+                      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                        <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                        <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
+                      </svg>
+                      <span className="mt-2 text-xs font-medium">{item}</span>
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Description */}
@@ -295,20 +325,33 @@ export default async function PropertyDetailPage({
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
             {/* Current images */}
             <div className="grid grid-cols-3 gap-2">
-              {currentImageLabels.map((label) => (
-                <div
-                  key={label}
-                  className="relative aspect-[4/3] overflow-hidden rounded-lg border border-stone/10"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-gray-100 to-stone-100 flex flex-col items-center justify-center text-stone-lighter/40">
-                    <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
-                      <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-                      <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
-                    </svg>
-                    <span className="mt-1 text-[10px] font-medium">{label}</span>
+              {currentImageLabels.map((label, i) => {
+                const imgSrc = galleryImages[galleryImages.length - 1 - i];
+                return (
+                  <div
+                    key={label}
+                    className="relative aspect-[4/3] overflow-hidden rounded-lg border border-stone/10"
+                  >
+                    {imgSrc ? (
+                      <Image
+                        src={imgSrc}
+                        alt={`${property.address} — ${label}`}
+                        fill
+                        sizes="(max-width: 640px) 33vw, 20vw"
+                        className="object-cover opacity-80 grayscale-[30%]"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-gray-100 to-stone-100 flex flex-col items-center justify-center text-stone-lighter/40">
+                        <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
+                          <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                          <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
+                        </svg>
+                        <span className="mt-1 text-[10px] font-medium">{label}</span>
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div>
@@ -380,10 +423,10 @@ export default async function PropertyDetailPage({
               </p>
             </div>
             <div className="rounded-xl border border-stone/10 bg-white p-8 shadow-sm">
-              <h3 className="text-lg font-bold text-navy">Bay State Remodeling</h3>
+              <h3 className="text-lg font-bold text-navy">Bay State Remodeling / Bay State Holdings Group</h3>
               <p className="mt-1 text-sm text-copper">Licensed Design-Build Contractor</p>
               <p className="mt-3 text-sm leading-relaxed text-stone-light">
-                18+ years in business, 170+ five-star Google reviews. Zion Steinmetz and team deliver full-service
+                18+ years in business, 170+ five-star Google reviews. Zion Yehoshua and team deliver full-service
                 renovation from design through construction, on time and on budget.
               </p>
             </div>

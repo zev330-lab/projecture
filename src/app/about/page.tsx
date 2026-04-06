@@ -21,10 +21,10 @@ const team = [
     bio: "With 26+ years in the Newton market and $590M+ in career sales, Sarina is one of the most accomplished agents in the area. Named Top 1.5% nationally, she identifies acquisition opportunities and ensures every Projecture home is priced right for the market.",
   },
   {
-    name: "Zion Steinmetz",
+    name: "Zion Yehoshua",
     role: "Renovation & Construction",
-    firm: "Bay State Remodeling",
-    bio: "As the leader of Bay State Remodeling, Zion brings 18+ years of hands-on renovation experience. With 170+ five-star Google reviews and hundreds of completed projects, he oversees every renovation from design through construction to ensure the highest quality.",
+    firm: "Bay State Remodeling / Bay State Holdings Group",
+    bio: "As the owner of Bay State Remodeling and Bay State Holdings Group, Zion brings 18+ years of hands-on renovation experience. With 170+ five-star Google reviews and hundreds of completed projects, he oversees every renovation from design through construction to ensure the highest quality.",
   },
 ];
 
@@ -42,7 +42,7 @@ const credentials = [
       "One of the top-producing teams in the William Raveis network. Specialists in Newton, Brookline, Wellesley, and the Greater Boston luxury market. Known for deep neighborhood knowledge and a consultative approach to real estate.",
   },
   {
-    firm: "Bay State Remodeling",
+    firm: "Bay State Remodeling / Bay State Holdings Group",
     subtitle: "Licensed Design-Build Contractor",
     stats: [
       { label: "Years in Business", value: "18+" },

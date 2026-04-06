@@ -236,7 +236,7 @@ export default function HomeClient({
                 </p>
               </div>
               <div className="rounded-xl border border-stone/10 bg-white p-10 text-left shadow-sm">
-                <h3 className="text-xl font-bold text-navy">Bay State Remodeling</h3>
+                <h3 className="text-xl font-bold text-navy">Bay State Remodeling / Bay State Holdings Group</h3>
                 <p className="mt-1 text-sm text-copper">
                   Licensed Design-Build Contractor
                 </p>

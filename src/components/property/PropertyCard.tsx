@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import Badge from "@/components/ui/Badge";
 import type { Property } from "@/lib/types";
+import { getPropertyPhotos } from "@/lib/data/photos";
 
 function formatPrice(price: number | null): string {
   if (!price) return "Price TBD";
@@ -38,28 +40,40 @@ export default function PropertyCard({ property }: { property: Property }) {
   const gradient = typeGradients[property.property_type || ""] || typeGradients.colonial;
   const status = statusLabels[property.property_status] || statusLabels.published;
   const timeline = getTimelineLabel(property.estimated_ready_date);
+  const photos = getPropertyPhotos(property.address);
+  const cardImage = photos?.card_image;
 
   return (
     <Link href={`/properties/${property.id}`}>
       <div className="group relative overflow-hidden rounded-xl border border-stone/10 bg-white shadow-sm transition-all hover:border-copper/30 hover:shadow-md">
-        {/* Image placeholder */}
-        <div className={`relative aspect-[4/3] bg-gradient-to-br ${gradient}`}>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-lighter/40">
-            <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
-              <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-              <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
-            </svg>
-            <span className="mt-2 text-xs font-medium text-stone-lighter/50">Rendering Coming Soon</span>
-          </div>
+        {/* Property image */}
+        <div className={`relative aspect-[4/3] ${cardImage ? "bg-stone-100" : `bg-gradient-to-br ${gradient}`}`}>
+          {cardImage ? (
+            <Image
+              src={cardImage}
+              alt={`${property.address} — renovated home`}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-stone-lighter/40">
+              <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+                <path d="M6 38l12-16 8 10 6-8 10 14H6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                <circle cx="34" cy="14" r="4" stroke="currentColor" strokeWidth="2" />
+              </svg>
+              <span className="mt-2 text-xs font-medium text-stone-lighter/50">Rendering Coming Soon</span>
+            </div>
+          )}
 
           {/* Status badge */}
-          <div className="absolute left-3 top-3">
+          <div className="absolute left-3 top-3 z-10">
             <Badge variant={status.variant}>{status.label}</Badge>
           </div>
 
           {/* Timeline badge */}
           {timeline && (
-            <div className="absolute right-3 top-3">
+            <div className="absolute right-3 top-3 z-10">
               <span className="inline-flex items-center rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-navy shadow-sm backdrop-blur-sm">
                 {timeline}
               </span>

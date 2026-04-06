@@ -1,0 +1,242 @@
+{
+  "0": {
+    "address": "87 Auburndale Ave",
+    "card_image": "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+    "gallery": [
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/3rd-st-cambridge-after-main-bathroom-remodeling-3.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/garland-rd-newton-after-main-basement-remodeling-1.jpg"
+    ]
+  },
+  "1": {
+    "address": "42 Crescent St",
+    "card_image": "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+    "gallery": [
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/hosmer-st-watertown-after-main-bathroom-remodeling-6.jpg",
+      "/images/curated/mount-vernon-ave-waltham-after-basement-remodeling-29.jpg"
+    ]
+  },
+  "2": {
+    "address": "156 Ward St",
+    "card_image": "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+    "gallery": [
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/sewall-st-newton-after-basement-remodeling-6.jpg"
+    ]
+  },
+  "3": {
+    "address": "23 Upland Rd",
+    "card_image": "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+    "gallery": [
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/3rd-st-cambridge-after-main-bathroom-remodeling-3.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/garland-rd-newton-after-main-basement-remodeling-1.jpg"
+    ]
+  },
+  "4": {
+    "address": "314 Chestnut St",
+    "card_image": "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+    "gallery": [
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/south-st-needham-after-main-bathroom-remodeling-10.jpg",
+      "/images/curated/walnut-st-newton-after-basement-remodeling-12.jpg"
+    ]
+  },
+  "5": {
+    "address": "78 Otis St",
+    "card_image": "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+    "gallery": [
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/walnut-st-newton-after-main-whole-home-remodeling-24.jpg"
+    ]
+  },
+  "6": {
+    "address": "445 Lowell Ave",
+    "card_image": "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+    "gallery": [
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/sewall-st-newton-after-basement-remodeling-6.jpg"
+    ]
+  },
+  "7": {
+    "address": "19 Hawthorne Park",
+    "card_image": "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+    "gallery": [
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/south-st-needham-after-main-bathroom-remodeling-10.jpg",
+      "/images/curated/mill-st-newton-after-whole-home-remodeling-5-new.jpg"
+    ]
+  },
+  "8": {
+    "address": "267 Woodward St",
+    "card_image": "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+    "gallery": [
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/3rd-st-cambridge-after-main-bathroom-remodeling-3.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/mill-st-newton-after-whole-home-remodeling-5-new.jpg"
+    ]
+  },
+  "9": {
+    "address": "531 Commonwealth Ave",
+    "card_image": "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+    "gallery": [
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/sewall-st-newton-after-basement-remodeling-6.jpg"
+    ]
+  },
+  "10": {
+    "address": "88 Edgehill Rd",
+    "card_image": "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+    "gallery": [
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/hosmer-st-watertown-after-main-bathroom-remodeling-6.jpg",
+      "/images/curated/mount-vernon-ave-waltham-after-basement-remodeling-29.jpg"
+    ]
+  },
+  "11": {
+    "address": "12 Vine St",
+    "card_image": "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+    "gallery": [
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/3rd-st-cambridge-after-main-bathroom-remodeling-3.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/east-1st-st-boston-after-main-whole-home-remodeling-10.jpg"
+    ]
+  },
+  "12": {
+    "address": "201 Walnut St",
+    "card_image": "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+    "gallery": [
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/3rd-st-cambridge-after-main-bathroom-remodeling-3.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/sewall-st-newton-after-whole-home-remodeling-1.jpg"
+    ]
+  },
+  "13": {
+    "address": "65 Hammond St",
+    "card_image": "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+    "gallery": [
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/hosmer-st-watertown-after-main-bathroom-remodeling-6.jpg",
+      "/images/curated/mount-vernon-ave-waltham-after-basement-remodeling-29.jpg"
+    ]
+  },
+  "14": {
+    "address": "340 Cabot St",
+    "card_image": "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+    "gallery": [
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/sewall-st-newton-after-basement-remodeling-6.jpg"
+    ]
+  },
+  "15": {
+    "address": "94 Parker St",
+    "card_image": "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+    "gallery": [
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/3rd-st-cambridge-after-main-bathroom-remodeling-3.jpg",
+      "/images/curated/brush-hill-road-newton-after-bathroom-remodeling-5-new.jpg",
+      "/images/curated/auburndale-ave-newton-after-main-whole-home-remodeling-49.jpg"
+    ]
+  },
+  "16": {
+    "address": "178 Webster St",
+    "card_image": "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+    "gallery": [
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/south-st-needham-after-main-bathroom-remodeling-10.jpg",
+      "/images/curated/auburndale-ave-newton-after-main-whole-home-remodeling-49.jpg"
+    ]
+  },
+  "17": {
+    "address": "55 Forest Ave",
+    "card_image": "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+    "gallery": [
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/sewall-st-newton-after-basement-remodeling-6.jpg"
+    ]
+  },
+  "18": {
+    "address": "410 Centre St",
+    "card_image": "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+    "gallery": [
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/cottonwood-rd-wellesley-after-main-kitchen-foyer-remodeling-9.jpg",
+      "/images/curated/lexington-street-newton-after-bathroom-remodeling-10-new.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/sewall-st-newton-after-basement-remodeling-6.jpg"
+    ]
+  },
+  "19": {
+    "address": "33 Floral St",
+    "card_image": "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+    "gallery": [
+      "/images/curated/east-1st-st-boston-after-main-kitchen-remodeling-5.jpg",
+      "/images/curated/islington-road-newton-after-kitchen-remodeling-9-new.jpg",
+      "/images/curated/bruce-st-dorchester-after-main-kitchen-remodeling-4.jpg",
+      "/images/curated/rebecca-road-newton-after-bathroom-2-new.jpg",
+      "/images/curated/south-st-needham-after-main-bathroom-remodeling-10.jpg",
+      "/images/curated/walnut-st-newton-after-basement-remodeling-12.jpg"
+    ]
+  }
+}

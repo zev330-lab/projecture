@@ -52,10 +52,10 @@ export default function ContactPage() {
 
                 {/* Bay State */}
                 <div className="rounded-xl border border-stone/10 bg-white p-6 shadow-sm">
-                  <h3 className="font-bold text-navy">Bay State Remodeling</h3>
+                  <h3 className="font-bold text-navy">Bay State Remodeling / Bay State Holdings Group</h3>
                   <p className="mt-1 text-sm text-copper">Licensed Design-Build Contractor</p>
                   <div className="mt-4 space-y-2 text-sm text-stone-light">
-                    <p>Zion Steinmetz</p>
+                    <p>Zion Yehoshua</p>
                     <a href="tel:6179258925" className="block transition-colors hover:text-navy">
                       (617) 925-8925
                     </a>
